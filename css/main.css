@@ -1,0 +1,139 @@
+body{
+ background:  url(img/subtle_white_feathers.png);
+ font 1em, Arial;
+ padding: 0;
+ margin: 0;
+}
+
+
+#coords {  
+  background: #333; 
+  color: #fff; 
+  padding: 5px; 
+ }
+
+#wrapper{
+  margin-top: 120px;
+  margin-left: 200px;
+
+}
+
+#cube{
+
+ position: relative;
+ width: 300px;
+ height: 300px; 
+ transform-origin: 50% 50% -150px;
+ transform-style: preserve-3d;
+ -moz-transform-origin: 50% 50% -150px;
+ -moz-transform-style: preserve-3d;
+ -webkit-transform-origin: 50% 50% -150px;
+ -webkit-transform-style: preserve-3d;
+}
+.side{	
+  margin: 50px;
+  padding: 0px;
+  width: 300px;
+  height: 300px;
+  background: rgba(0,0,0, 0.3);
+  background: -moz-radial-gradient(rgba(0,0,0, 0.1), rgba(0,0,0, 0.7));
+  position: absolute;
+  border: 5px solid #000;
+  border-radius: 10px;    
+  box-shadow: 0 0 6px rgba(0,0,0,.5);
+  transform-origin: 50% 50% -150px;
+  -moz-transform-origin: 50% 50% -150px;
+  -webkit-transform-origin: 50% 50% -150px;
+}
+
+#side1{	
+	background: white; 
+}
+#side2{
+	transform:rotateY(90deg);
+	-moz-transform:rotateY(90deg);
+	-webkit-transform:rotateY(90deg);
+	background: red; 
+}
+#side3{
+	transform:rotateY(-90deg);
+	-moz-transform:rotateY(-90deg);
+	-webkit-transform:rotateY(-90deg);
+	background: orange; 
+}
+#side4{
+	transform:rotateX(90deg);
+	-moz-transform:rotateX(90deg);
+	-webkit-transform:rotateX(90deg);
+	background: yellow; 
+}
+#side5{
+	transform:rotateX(-90deg);
+	-moz-transform:rotateX(-90deg);
+	-webkit-transform:rotateX(-90deg);
+	background: green;
+}
+#side6{
+	transform:rotateY(180deg);
+	-moz-transform:rotateY(180deg);
+	-webkit-transform:rotateY(180deg);
+	background: blue;
+}
+.side-grid{	
+  float: left;
+  margin: 0;	
+  width: 90px;
+  height: 90px;
+  border-radius: 5px;
+  border: 5px solid #000;
+  line-height: 50px;
+  font-size: 2.5em;
+  text-align:center;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0,0,0, .4);
+}
+#controller{	
+	margin-top: 10px;	
+	margin-left: 200px;
+	width: 260px;
+	height: 260px;	
+	padding: 30px;
+	border: 5px solid #CCC;
+	font-size: 3.5em;
+	text-align:center;
+	color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 0 6px rgba(0,0,0,.7) ;
+    text-shadow: 12px 32px 6px rgba(0,0,0, .4);
+}
+#controller:hover{
+	text-shadow: 8px 24px 3px rgba(0,0,0, .4);
+    box-shadow: 1px 3px 3px rgba(0,0,0,.5) ;
+}
+.rand-btn{
+	width: 260px;
+	height: 40px;	
+	padding: 30px;	
+	margin-top: 10px;	
+	margin-left: 200px;	
+	border: 5px solid #CCC;
+	border-radius: 10px;
+	font-size: 2.5em;
+	color: #333;
+	text-align:center;
+	box-shadow: 0 0 6px rgba(0,0,0,.7) ;
+	text-shadow: 3px 6px 4px rgba(0,0,0, .8);
+}
+.rand-btn:hover{
+	text-align:center;
+	text-shadow: 1px 3px 3px rgba(0,0,0, .3);
+    box-shadow: 0 0 3px rgba(0,0,0,.5) ;
+}
+.compile{
+  margin-top: 130px;	
+}
+
+.container{
+  position: relative;
+  display: inline;
+}
