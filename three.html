@@ -1,124 +1,24 @@
-
 <html>
  <head>
   <title>My first three.js app</title> 
-  <style> 
-  body { margin: 0; }
-   canvas { width: 100%; height: 100% } 
-   </style> 
-   </head> 
-   <body> 
-    
-       <div id="world"></div>
 
-   <script src="js/three.js"></script>
-    <script>
-    
-      window.addEventListener('load', init, false);
-      
-      var scene, camera, HEIGHT, WIDTH, renderer, container;
-
-      function createScene(){
-        HEIGHT = window.innerHeight;
-        WIDTH = window.innerWidth;
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera( 75, WIDTH/HEIGHT, 0.1, 1000 );
-        camera.position.z = 10; 
-        renderer = new THREE.WebGLRenderer();
-        renderer.setSize( WIDTH, HEIGHT );          
-        container = document.getElementById('world');
-        container.appendChild( renderer.domElement );        
-         window.addEventListener('resize', handleWindowResize, false);
-     }
-
-     function handleWindowResize() {  
-       HEIGHT = window.innerHeight;
-       WIDTH = window.innerWidth;
-       renderer.setSize(WIDTH, HEIGHT);
-       camera.aspect = WIDTH / HEIGHT;
-       camera.updateProjectionMatrix();
-     }
+  <link rel="stylesheet" href="css/main3.css">
  
-  
-     var Cube = function(){            
-     var geom = new THREE.CubeGeometry( 1, 1, 1 ); 
-      for ( var i = 0; i < geom.faces.length; i = i + 2 ) {
-           var color =  Math.random() * 0xffffff;
-           geom.faces[ i ].color.setHex( color);
-           geom.faces[ i + 1 ].color.setHex( color);
-      }
-      var m = new THREE.Mesh(geom, mat);
-      var mat = new THREE.MeshBasicMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors } );
-      this.mesh =  new THREE.Mesh(geom, mat);
-     }
-
-     var cube1; 
-     var rubicCube;     
-     function createCube(){
-        rubicCube = new addRubicCub(); 
-        scene.add(rubicCube.mesh);   
+   </head> 
+   <body>
     
-        var axes = new THREE.AxisHelper( 20 );
-        scene.add( axes ); 
-    }        
-  
-    function init(event){
-       createScene();  
-       createCube();        
-       loop();
-       document.addEventListener('mousemove', handleMouseMove, false);   
-     }
+    <div id="world"></div>
+    <div id="control"></div>
 
-
-    function addRubicCub(){
-       this.mesh = new THREE.Object3D();
-
-       var positionX = 0;
-       var positionY = 0;
-       var positionZ = 0;
-       
-       var geom = new THREE.BoxGeometry(3, 3, 3);      
-
-       geom.center();       
-
-       var mat = new THREE.MeshPhongMaterial({color:0xffffff,   });
-
-      var cubNum = 9;
-
-      for(var i = -1; i < 2; i++){
-        for(var j = -1; j < 2; j++){
-          for (var k = -1; k < 2; k++) {       
-            cube1 = new Cube(); 
-            cube1.mesh.position.x = j;         
-            cube1.mesh.position.y = i;
-            cube1.mesh.position.z = k;    
-            this.mesh.add(cube1.mesh);
-          }
-        }
-      }
-    }
-
-
-   function loop(){
-      updateCube();
-      renderer.render(scene, camera); 
-      requestAnimationFrame(loop);   
-   }
-
-   function updateCube(){
-      rubicCube.mesh.rotation.x = -mousePos.y;
-      rubicCube.mesh.rotation.y = -mousePos.x;
-
-   };
-
-    var mousePos = {x:0, y:0};
-    function handleMouseMove(event) {     
-        var tx =  + (event.clientX / WIDTH)*14;    
-        var ty =  + (event.clientY / HEIGHT)*10;
-        mousePos = {x:tx, y:ty};      
-    }
-
-      </script> 
-
+    <div id="r0" class="rotateh"></div>
+    <div id="r1" class="rotateh"></div>
+    <div id="r2" class="rotateh"></div>
+    <div id="r3" class="rotatew"></div>
+    <div id="r4" class="rotatew"></div>      
+    <div id="r5" class="rotatew"></div>  
+ 
+    <script src="js/three.js"></script>  
+    <script src="js/main3.js"></script> 
+    
    </body> 
- </html>s
+ </html>
