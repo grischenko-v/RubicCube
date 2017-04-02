@@ -69,6 +69,10 @@
   var group;
 
   var rout = false;
+  var nameMass1 = ['-1-1-1', '-1-10', '-1-11', '0-1-1', '0-10', '0-11', '1-1-1', '1-10', '1-11' ]
+  var nameMass2 = ['-10-1',  '-100',  '-101',  '00-1',  '000',  '001',  '10-1',  '100',  '101'  ]
+  var nameMass3 = ['-11-1',  '-110',  '-111',  '01-1',  '010',  '011',  '11-1',  '110',  '111'  ]
+
 
     function init(event){
      createScene();  
@@ -86,13 +90,6 @@
 
      function(event){
         group = new THREE.Object3D();
-
-
-      console.log("opbj by name");
-      console.log(scene.getObjectByName('-1-1-1'));
-
-       var nameMass1 = ['-1-1-1', '-1-10', '-1-11', '0-1-1', '0-10', '0-11', '1-1-1', '1-10', '1-11' ]
-
 
        for(let num = 0; num < nameMass1.length; num++){
         THREE.SceneUtils.attach(scene.getObjectByName(nameMass1[num]),  scene, group);
@@ -156,31 +153,15 @@
       
       var temp;
       var tempRotation = group.rotation.x;
-
-
-
-      for(var j = 0; j < 1; j++){
-               // temp=group.children.pop();
-               
-             //  temp.rotation.x = tempRotation;   
-               //temp.position.x =-2;                  
-          //   rubicCube.mesh.add(group);
-      }
        
-       THREE.SceneUtils.attach(group,  scene,  rubicCube.mesh);
-       
-
-      //console.log(tempRotation);
-
-
+      THREE.SceneUtils.attach(group,  scene,  rubicCube.mesh);
       console.log(rubicCube);
-     scene.remove (group);
 
-     console.log("opbj by name");
-      console.log(scene.getObjectByName('-1-1-1'));
-    //  console.log(scene.children[0].children[0]);
-      //  console.log(scene);
-      // group = null;
+       scene.remove(group);
+       group = null;
+       console.log("opbj by name");
+       console.log(group);
+  
      // 
       //if(aGroup.rotation.x  >  2*Math.PI   || aGroup.rotation.x  <  -2*Math.PI ) aGroup.rotation.x = 0; 
       // currentRoutValue = aGroup.rotation.x ;      
