@@ -27,10 +27,29 @@
      }
  
   
-     var Cube = function(){            
-       var geom = new THREE.CubeGeometry( 1, 1, 1 ); 
+     var Cube = function(pos1, pos2, pos3 ){   
+
+       var color1 = 0xF59529;//orange 
+       var color2 = 0xE92020;//red
+       var color3 = 0xF8F812;//yellow
+       var color4 = 0xffffff;//white
+       var color5 = 0x3A9014;//green
+       var color6 = 0x131ADD;//blue
+       var color7 = 0x000000;//black
+       
+       var color ;
+
+      var geom = new THREE.CubeGeometry( 1, 1, 1 ); 
       for ( var i = 0; i < geom.faces.length; i = i + 2 ) {
-           var color =  Math.random() * 0xffffff;
+          /*switch(Math.random() * 10){
+               case 0:color = color1; break;
+               case 1:color = color2;  break;
+               case 2:color = color3;  break;
+               case 3:color = color4;  break;
+               case 4:color = color5;  break;
+               case 5:color = color6;  break;
+           }*/
+           color =  Math.random() * 0xffffff;
            geom.faces[ i ].color.setHex( color);
            geom.faces[ i + 1 ].color.setHex( color);
 
@@ -53,12 +72,10 @@
 
     function init(event){
      createScene();  
-     createCube();       
-     //console.log(cube);       
+     createCube();    
+         
      console.log(rubicCube);        
-     // rubicCube.mesh.add(group);
-     // scene.remove (group);
-     //group = {};      
+     
      console.log("fdgfsg");
      console.log(group);     
      loop();
@@ -69,33 +86,26 @@
 
      function(event){
         group = new THREE.Object3D();
-        group.add(
-                scene.children[0].children[0],
-                scene.children[0].children[1],
-                scene.children[0].children[2],
-                scene.children[0].children[9],
-                scene.children[0].children[10],
-                scene.children[0].children[11],
-                scene.children[0].children[18],
-                scene.children[0].children[19],
-                scene.children[0].children[20]
-             );
 
 
-        group.rotation.x = scene.children[0].rotation.x;
-        group.rotation.y = scene.children[0].rotation.y;
-        group.rotation.z = scene.children[0].rotation.z;
-      
-        console.log(group.rotation.x);  
-        console.log(group.rotation.y);  
-        console.log(group.rotation.z);  
+      console.log("opbj by name");
+      console.log(scene.getObjectByName('-1-1-1'));
 
-        scene.add( group );
-        rout = true;
-       //  console.log('ratation ' + rout);
+       var nameMass1 = ['-1-1-1', '-1-10', '-1-11', '0-1-1', '0-10', '0-11', '1-1-1', '1-10', '1-11' ]
+
+
+       for(let num = 0; num < nameMass1.length; num++){
+        THREE.SceneUtils.attach(scene.getObjectByName(nameMass1[num]),  scene, group);
+       } 
+     
+        scene.add( group );      
+        console.log(scene);  
+        console.log(group);       
+        rout = true;     
         }
       , false); 
      }
+
 
     var cube = []; 
     function addRubicCub(){
@@ -116,11 +126,11 @@
       for(var i = -1; i < 2; i++){
         for(var j = -1; j < 2; j++){
           for (var k = -1; k < 2; k++) { 
-            cube[n] = new Cube(); 
+            cube[n] = new Cube(i,j,k); 
             cube[n].mesh.position.x = j;         
             cube[n].mesh.position.y = i;
             cube[n].mesh.position.z = k; 
-            cube[n].mesh.name = "name" + i + j + k + " number: " + n; 
+            cube[n].mesh.name = "" + i + j + k ; 
             this.mesh.add(cube[n].mesh);         
             n++;   
           }
@@ -143,36 +153,45 @@
     else if(rout === true) {
       rout = false;
       routValue =  0;   
-        
-
-
-        
-      rubicCube.mesh.add(group.children.pop());
-      rubicCube.mesh.add(group.children.pop());
-      rubicCube.mesh.add(group.children.pop());
-      rubicCube.mesh.add(group.children.pop());
-      rubicCube.mesh.add(group.children.pop());
-      rubicCube.mesh.add(group.children.pop());
-      rubicCube.mesh.add(group.children.pop());
-      rubicCube.mesh.add(group.children.pop());
-      rubicCube.mesh.add(group.children.pop());
-      console.log(group);
-      console.log(rubicCube);
-      scene.remove ( group    );
-
-          console.log(scene.children[0].children[0]);
-      //  console.log(scene);
-    // group = null;
-      console.log( );
-      //if(aGroup.rotation.x  >  2*Math.PI   || aGroup.rotation.x  <  -2*Math.PI ) aGroup.rotation.x = 0; 
-     // currentRoutValue = aGroup.rotation.x ;
       
+      var temp;
+      var tempRotation = group.rotation.x;
+
+
+
+      for(var j = 0; j < 1; j++){
+               // temp=group.children.pop();
+               
+             //  temp.rotation.x = tempRotation;   
+               //temp.position.x =-2;                  
+          //   rubicCube.mesh.add(group);
+      }
+       
+       THREE.SceneUtils.attach(group,  scene,  rubicCube.mesh);
+       
+
+      //console.log(tempRotation);
+
+
+      console.log(rubicCube);
+     scene.remove (group);
+
+     console.log("opbj by name");
+      console.log(scene.getObjectByName('-1-1-1'));
+    //  console.log(scene.children[0].children[0]);
+      //  console.log(scene);
+      // group = null;
+     // 
+      //if(aGroup.rotation.x  >  2*Math.PI   || aGroup.rotation.x  <  -2*Math.PI ) aGroup.rotation.x = 0; 
+      // currentRoutValue = aGroup.rotation.x ;      
     }
   }
 
    function loop(){  
      //if( typeof group !== 'null')
-                      rotateGroup(group, 'x'); 
+         rotateGroup(group, 'x'); 
+       
+
       currentRoutValue = scene.children[0].rotation.x;
     
       updateCube();
