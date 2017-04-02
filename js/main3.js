@@ -95,7 +95,8 @@
         THREE.SceneUtils.attach(scene.getObjectByName(nameMass1[num]),  scene, group);
        } 
      
-        scene.add( group );      
+        scene.add( group ); 
+
         console.log(scene);  
         console.log(group);       
         rout = true;     
@@ -176,6 +177,7 @@
       currentRoutValue = scene.children[0].rotation.x;
     
       updateCube();
+      scene.updateMatrixWorld(true);
       renderer.render(scene, camera); 
       requestAnimationFrame(loop);  
    }
