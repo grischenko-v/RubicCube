@@ -72,6 +72,8 @@ function createCube(){
   scene.add( axes );
 }
 
+
+
 var group;
 var rout = false;
 //x
@@ -87,10 +89,14 @@ var nameMass7 = ['-1-11',  '-101',  '-111',  '0-11',  '001',  '011',  '1-11',  '
 var nameMass8 = ['-1-10',  '-100',  '-110',  '0-10',  '000',  '010',  '1-10',  '100',  '110' ];
 var nameMass9 = ['-1-1-1', '-10-1', '-11-1', '0-1-1', '00-1', '01-1', '1-1-1', '10-1', '11-1'];
 
+var routAxis = true;
+
+
 function init(event){
       createScene();
       createCube();
       addLight();
+        
       console.log(rubicCube);
       console.log("fdgfsg");
       console.log(group);
@@ -98,6 +104,13 @@ function init(event){
       loop();
       //add listener for rotation
       control.addEventListener('mousemove', handleMouseMove, false);
+      control.addEventListener('mousedown',
+               function(event){
+                       routAxis = !routAxis;
+                      console.log(routAxis);
+                     }
+        , false);
+
       r3.addEventListener('click',
                     function(event){
                        group = new THREE.Object3D();                    
@@ -142,6 +155,9 @@ function addRubicCub(){
       }
     }
   }
+  var cubeAxis = new THREE.AxisHelper(20);
+  this.mesh.add(cubeAxis);
+
 }
 
 var currentRoutValueX = 0;
@@ -188,13 +204,30 @@ function rotateGroup(aGroup, axis){
  }
 
 
+var angle = 0;
+var radius = 10; 
+
 
 function loop(){
    rotateGroup(group, 'x');
 
+ var x = camera.position.x,
+    y = camera.position.y,
+    z = camera.position.z;
+var n;
+
+
+
+if (routAxis){
+    camera.position.y = rubicCube.mesh.position.y + radius * Math.sin( 3 *  Number(mousePos.y).toFixed(3) / 4 );  
+    camera.position.x = rubicCube.mesh.position.x + radius * Math.sin( 3 *  Number(mousePos.x).toFixed(3) / 4 );
+    camera.position.z = rubicCube.mesh.position.z + radius * Math.cos( 3 *  Number(mousePos.x + mousePos.y).toFixed(3) / 4 );
+}
+ 
+camera.lookAt( rubicCube.mesh.position );
   // rotateGroup(group, 'y');
   // rotateGroup(group, 'z');
-
+angle+=0.01;
 
   updateCube();
   renderer.render(scene, camera);
@@ -202,8 +235,13 @@ function loop(){
 }
 
 function updateCube(){
-  rubicCube.mesh.rotation.x = -mousePos.y;
+ // rubicCube.mesh.rotation.x = -mousePos.y;
   //rubicCube.mesh.rotation.y = -mousePos.x;
+ //camera.position.x= rubicCube.mesh.position.x + radius * Math.cos(  5 *  Number(mousePos.x).toFixed(2) );
+//camera.position.y = rubicCube.mesh.position.y + radius * Math.cos( 2 * angle );         
+// camera.position.z = rubicCube.mesh.position.z + radius * Math.sin( 5 * Number(mousePos.x).toFixed(2));
+
+
 };
 
 var mousePos = {x:0, y:0};
