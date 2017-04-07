@@ -6,7 +6,10 @@ function createScene(){
   WIDTH = 600;//window.innerWidth;
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera( 75, WIDTH/HEIGHT, 0.1, 1000 );
-  camera.position.z = 10;
+  camera.position.z = 7;
+  camera.position.x = 7;
+  camera.position.y = 7;
+
   renderer = new THREE.WebGLRenderer( {alpha: true});
   renderer.setSize( WIDTH, HEIGHT );
   renderer.setClearColor( 0xaaaaaa, 1 );
@@ -66,70 +69,88 @@ var Cube = function(pos1, pos2, pos3 ){
 
 var rubicCube;
 function createCube(){
+
   rubicCube = new addRubicCub();
   scene.add(rubicCube.mesh);
   var axes = new THREE.AxisHelper( 20 );
+
   scene.add( axes );
 }
 
-
-
 var group;
-var rout = false;
-//x
 var nameMass1 = ['-1-1-1', '-1-10', '-1-11', '0-1-1', '0-10', '0-11', '1-1-1', '1-10', '1-11'];
+nameMass1.currentRoutValueX = 0;
+nameMass1.currentRoutValueY = 0;
+nameMass1.currentRoutValueZ = 0;
+nameMass1.rout = false;
+
 var nameMass2 = ['-10-1',  '-100',  '-101',  '00-1',  '000',  '001',  '10-1',  '100',  '101' ];
+nameMass2.currentRoutValueX = 0;
+nameMass2.currentRoutValueY = 0;
+nameMass2.currentRoutValueZ = 0;
+nameMass2.rout = false;
+
+
 var nameMass3 = ['-11-1',  '-110',  '-111',  '01-1',  '010',  '011',  '11-1',  '110',  '111' ];
+nameMass3.currentRoutValueX = 0;
+nameMass3.currentRoutValueY = 0;
+nameMass3.currentRoutValueZ = 0;
+nameMass3.rout = false;
+
 //y
 var nameMass4 = ['11-1',  '110',  '111',  '10-1',  '100',  '101',  '1-1-1',  '1-10',  '1-11' ];
+nameMass4.currentRoutValueX = 0;
+nameMass4.currentRoutValueY = 0;
+nameMass4.currentRoutValueZ = 0;
+nameMass4.rout = false;
+
 var nameMass5 = ['01-1',  '010',  '011',  '00-1',  '000',  '001',  '0-1-1',  '0-10',  '0-11' ];
-var nameMass6 = ['-11-1', '-110', '-111', '-10-1', '-100', '-101', '-1-1-1', '-1-10', '-1-11']
+nameMass5.currentRoutValueX = 0;
+nameMass5.currentRoutValueY = 0;
+nameMass5.currentRoutValueZ = 0;
+nameMass5.rout = false;
+
+var nameMass6 = ['-11-1', '-110', '-111', '-10-1', '-100', '-101', '-1-1-1', '-1-10', '-1-11'];
+nameMass6.currentRoutValueX = 0;
+nameMass6.currentRoutValueY = 0;
+nameMass6.currentRoutValueZ = 0;
+nameMass6.rout = false;
+
 //z
 var nameMass7 = ['-1-11',  '-101',  '-111',  '0-11',  '001',  '011',  '1-11',  '101',  '111' ];
+nameMass7.currentRoutValueX = 0;
+nameMass7.currentRoutValueY = 0;
+nameMass7.currentRoutValueZ = 0;
+nameMass7.rout = false;
+
 var nameMass8 = ['-1-10',  '-100',  '-110',  '0-10',  '000',  '010',  '1-10',  '100',  '110' ];
+nameMass8.currentRoutValueX = 0;
+nameMass8.currentRoutValueY = 0;
+nameMass8.currentRoutValueZ = 0;
+nameMass8.rout = false;
+
 var nameMass9 = ['-1-1-1', '-10-1', '-11-1', '0-1-1', '00-1', '01-1', '1-1-1', '10-1', '11-1'];
+nameMass9.currentRoutValueX = 0;
+nameMass9.currentRoutValueY = 0;
+nameMass9.currentRoutValueZ = 0;
+nameMass9.rout = false;
 
-var routAxis = true;
-
-
+var routAxis = false;
 function init(event){
       createScene();
       createCube();
-      addLight();
-        
-      console.log(rubicCube);
-      console.log("fdgfsg");
+      addLight();        
+      console.log(rubicCube);     
       console.log(group);
       console.log(scene);
       loop();
       //add listener for rotation
-      control.addEventListener('mousemove', handleMouseMove, false);
-      control.addEventListener('mousedown',
-               function(event){
-                       routAxis = !routAxis;
-                      console.log(routAxis);
-                     }
-        , false);
-
-      r3.addEventListener('click',
-                    function(event){
-                       group = new THREE.Object3D();                    
-                       console.log('x: ' + rubicCube.mesh.rotation.x + 'y: ' + rubicCube.mesh.rotation.y + 'z: ' + rubicCube.mesh.rotation.z);
-
-                       group.rotation.x = currentRoutValueX + rubicCube.mesh.rotation.x;
-                       group.rotation.y = currentRoutValueY + rubicCube.mesh.rotation.y;
-                       group.rotation.z = currentRoutValueZ + rubicCube.mesh.rotation.z;
-
-                       for(let num = 0; num < nameMass1.length; num++){
-                            THREE.SceneUtils.attach(scene.getObjectByName(nameMass1[num]), scene, group);
-                       }
-                       scene.add( group );
-                       console.log(scene);
-                       console.log(group);
-                       rout = true;
-                    }
-                    , false);
-         }
+      world.addEventListener('mousemove', handleMouseMove, false);
+      world.addEventListener('mousedown', function(event){ routAxis = !routAxis; }, false);
+      r0.addEventListener('click', function(event){ choiseSide(nameMass5); }, false);
+      r3.addEventListener('click', function(event){ choiseSide(nameMass1); }, false);
+      r4.addEventListener('click', function(event){ choiseSide(nameMass7); }, false);
+}
 
 var cube = [];
 function addRubicCub(){
@@ -157,91 +178,72 @@ function addRubicCub(){
   }
   var cubeAxis = new THREE.AxisHelper(20);
   this.mesh.add(cubeAxis);
-
 }
 
-var currentRoutValueX = 0;
-var currentRoutValueY = 0;
-var currentRoutValueZ = 0;
-
 var routValue = 0;
-function rotateGroup(aGroup, axis){
+function rotateGroup(aGroup, axis, side){
 
-   if(routValue < Math.PI/2 && rout === true){
+   if(routValue <= Number(Math.PI/2).toFixed(4) && rout === true){
        routValue +=0.01;
        switch (axis){
-         case 'x': aGroup.rotation.x = currentRoutValueX + rubicCube.mesh.rotation.x + routValue; break;
-         case 'y': aGroup.rotation.y = currentRoutValueY + rubicCube.mesh.rotation.y + routValue; break;
-         case 'z': aGroup.rotation.z = currentRoutValueZ + rubicCube.mesh.rotation.z + routValue; break;
+         case 'x': aGroup.rotation.x = side.currentRoutValueX + rubicCube.mesh.rotation.x + routValue; break;
+         case 'y': aGroup.rotation.y = side.currentRoutValueY + rubicCube.mesh.rotation.y + routValue; break;
+         case 'z': aGroup.rotation.z = side.currentRoutValueZ + rubicCube.mesh.rotation.z + routValue; break;
          default: console.log("rotateGroup wrong axis value!"); break;
        }
    }
    else if(rout === true) {
      rout = false;
      routValue = 0;
-     var temp;
-
-     var tempRotation = group.rotation.x;
-    // var tempRotation = group.rotation.y;
-     // var tempRotation = group.rotation.z;
-
      THREE.SceneUtils.attach(group, scene, rubicCube.mesh);
      console.log(rubicCube); 
-
-     currentRoutValueX = aGroup.rotation.x;
-     currentRoutValueY = aGroup.rotation.y;
-     currentRoutValueZ = aGroup.rotation.z;
-
-     console.log('currentRoutValueX : ' + currentRoutValueX + 'currentRoutValueY : ' + currentRoutValueY + 'currentRoutValueZ : ' + currentRoutValueZ );
+     switch (axis){
+        case 'x':{
+                 side.currentRoutValueX = ( Math.abs(side.currentRoutValueX - 2* Math.PI)) < 0.01 ? 0 : side.currentRoutValueX + Math.PI/2;                                                        
+                 side.currentRoutValueY = aGroup.rotation.y;
+                 side.currentRoutValueZ = aGroup.rotation.z;
+                 break; }
+         case 'y':{
+                  side.currentRoutValueY = ( Math.abs(side.currentRoutValueY - 2* Math.PI)) < 0.01 ? 0 : side.currentRoutValueY + Math.PI/2;                                                        
+                  side.currentRoutValueX = aGroup.rotation.x;
+                  side.currentRoutValueZ = aGroup.rotation.z;
+                 break; }
+        case 'z':{
+                  side.currentRoutValueZ = ( Math.abs(side.currentRoutValueZ - 2* Math.PI)) < 0.01 ? 0 : side.currentRoutValueZ + Math.PI/2;                                                        
+                  side.currentRoutValueX = aGroup.rotation.x;
+                  side.currentRoutValueY = aGroup.rotation.y;
+                 break; }
+     }
      scene.remove(group);
      group = null;
-
-     // if(aGroup.rotation.x > 2*Math.PI || aGroup.rotation.x < -2*Math.PI ) {
-         // aGroup.rotation.x = 0;
-         // currentRoutValue =0;
-      // }     
+     side.rout = false;
     }
  }
 
-
-var angle = 0;
-var radius = 10; 
-
-
 function loop(){
-   rotateGroup(group, 'x');
-
- var x = camera.position.x,
-    y = camera.position.y,
-    z = camera.position.z;
-var n;
-
-
-
-if (routAxis){
-    camera.position.y = rubicCube.mesh.position.y + radius * Math.sin( 3 *  Number(mousePos.y).toFixed(3) / 4 );  
-    camera.position.x = rubicCube.mesh.position.x + radius * Math.sin( 3 *  Number(mousePos.x).toFixed(3) / 4 );
-    camera.position.z = rubicCube.mesh.position.z + radius * Math.cos( 3 *  Number(mousePos.x + mousePos.y).toFixed(3) / 4 );
-}
- 
-camera.lookAt( rubicCube.mesh.position );
-  // rotateGroup(group, 'y');
-  // rotateGroup(group, 'z');
-angle+=0.01;
-
+  checkNeedRotation()  
   updateCube();
   renderer.render(scene, camera);
   requestAnimationFrame(loop);
 }
 
+function checkNeedRotation(){
+   if(nameMass1.rout === true)rotateGroup(group, 'x', nameMass1);    
+   if(nameMass7.rout === true)rotateGroup(group, 'z', nameMass7);
+   if(nameMass5.rout === true)rotateGroup(group, 'y', nameMass5);  
+}
+
 function updateCube(){
- // rubicCube.mesh.rotation.x = -mousePos.y;
-  //rubicCube.mesh.rotation.y = -mousePos.x;
- //camera.position.x= rubicCube.mesh.position.x + radius * Math.cos(  5 *  Number(mousePos.x).toFixed(2) );
-//camera.position.y = rubicCube.mesh.position.y + radius * Math.cos( 2 * angle );         
-// camera.position.z = rubicCube.mesh.position.z + radius * Math.sin( 5 * Number(mousePos.x).toFixed(2));
-
-
+  var x = camera.position.x,
+      y = camera.position.y,
+      z = camera.position.z;
+  var radius = 10;     
+  if (routAxis){
+     camera.position.y = rubicCube.mesh.position.y + radius * Math.sin( 3 *  Number(mousePos.y).toFixed(3) / 5 );  
+     camera.position.x = rubicCube.mesh.position.x + radius * Math.sin( 3 *  Number(mousePos.x).toFixed(3) / 5 );
+     camera.position.z = rubicCube.mesh.position.z + radius * Math.cos( 3 *  Number(mousePos.x + mousePos.y).toFixed(3) / 5 );
+  } 
+  camera.lookAt( rubicCube.mesh.position );
 };
 
 var mousePos = {x:0, y:0};
@@ -250,3 +252,18 @@ function handleMouseMove(event) {
   var ty = + (event.clientY / HEIGHT)*10;
   mousePos = {x:tx, y:ty};
 }
+
+function choiseSide(side){
+  group = new THREE.Object3D();                    
+  group.rotation.x = side.currentRoutValueX + rubicCube.mesh.rotation.x;
+  group.rotation.y = side.currentRoutValueY + rubicCube.mesh.rotation.y;
+  group.rotation.z = side.currentRoutValueZ + rubicCube.mesh.rotation.z;
+
+  for(let num = 0; num < side.length; num++){
+      THREE.SceneUtils.attach(scene.getObjectByName(side[num]), scene, group);
+  }
+  scene.add( group );               
+  rout = true;
+  side.rout = true;
+}
+
