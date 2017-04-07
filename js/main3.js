@@ -38,13 +38,13 @@ function handleWindowResize() {
 }
 
 var Cube = function(pos1, pos2, pos3 ){
-  var color1 = 0xF59529;//orange
-  var color2 = 0xE92020;//red
-  var color3 = 0xF8F820;//yellow
-  var color4 = 0xffffff;//white
-  var color5 = 0x3A9014;//green
-  var color6 = 0x3cbbfa;//blue
-  var color7 = 0x000000;//black
+  var color1 = 0xdb7f0c;//orange
+  var color2 = 0x890828;//red
+  var color3 = 0xffce00;//yellow
+  var color4 = 0xede3de;//white
+  var color5 = 0x00aa11;//green
+  var color6 = 0x1c61b5;//blue
+  var color7 = 0x2A343C;//black
   var color ;
   geom = new THREE.CubeGeometry( 1, 1, 1 );
   for ( var i = 0; i < geom.faces.length; i = i + 2 ) {
