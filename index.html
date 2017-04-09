@@ -1,91 +1,17 @@
-<!DOCTYPE html>
 <html>
 <head>
- <title>Rubics Cube</title>
- <meta charset="utf-8">
- <link rel="stylesheet" type="text/css" href="css/main.css">
+<title>My first three.js app</title>
+<link rel="stylesheet" href="css/main.css">
 </head>
-<body >
-
-<div id = "coords"></div>
-<div class = 'container'>
-
-<div id="wrapper">
-  <div id="cube" >  
-   <div class="side" id = "side1">
-    <div id = "ws1" class = "side-grid">ws1</div>
-    <div id = "ws2" class = "side-grid">ws2</div>
-    <div id = "ws3" class = "side-grid">ws3</div>
-    <div id = "ws4" class = "side-grid">ws4</div>
-    <div id = "ws5" class = "side-grid">ws5</div>
-    <div id = "ws6" class = "side-grid">ws6</div>
-    <div id = "ws7" class = "side-grid">ws7</div>
-    <div id = "ws8" class = "side-grid">ws8</div>
-    <div id = "ws9" class = "side-grid">ws9</div>
-   </div>
-   <div class="side" id = "side2">
-    <div id = "rs1" class = "side-grid">rs1</div>
-    <div id = "rs2" class = "side-grid">rs2</div>
-    <div id = "rs3" class = "side-grid">rs3</div>
-    <div id = "rs4" class = "side-grid">rs4</div>
-    <div id = "rs5" class = "side-grid">rs5</div>
-    <div id = "rs6" class = "side-grid">rs6</div>
-    <div id = "rs7" class = "side-grid">rs7</div>
-    <div id = "rs8" class = "side-grid">rs8</div>
-    <div id = "rs9" class = "side-grid">rs9</div>
-   </div>
-   <div class="side" id = "side3"> 
-    <div id = "os1" class = "side-grid">os1</div>
-    <div id = "os2" class = "side-grid">os2</div>
-    <div id = "os3" class = "side-grid">os3</div>
-    <div id = "os4" class = "side-grid">os4</div>
-    <div id = "os5" class = "side-grid">os5</div>
-    <div id = "os6" class = "side-grid">os6</div>
-    <div id = "os7" class = "side-grid">os7</div>
-    <div id = "os8" class = "side-grid">os8</div>
-    <div id = "os9" class = "side-grid">os9</div>
-   </div>
-   <div class="side" id = "side4">
-    <div id = "ys1" class = "side-grid">ys1</div>
-    <div id = "ys2" class = "side-grid">ys2</div>
-    <div id = "ys3" class = "side-grid">ys3</div>
-    <div id = "ys4" class = "side-grid">ys4</div>
-    <div id = "ys5" class = "side-grid">ys5</div>
-    <div id = "ys6" class = "side-grid">ys6</div>
-    <div id = "ys7" class = "side-grid">ys7</div>
-    <div id = "ys8" class = "side-grid">ys8</div>
-    <div id = "ys9" class = "side-grid">ys9</div>
-   </div>
-   <div class="side" id = "side5">
-    <div id = "gs1" class = "side-grid">gs1</div>
-    <div id = "gs2" class = "side-grid">gs2</div>
-    <div id = "gs3" class = "side-grid">gs3</div>
-    <div id = "gs4" class = "side-grid">gs4</div>
-    <div id = "gs5" class = "side-grid">gs5</div>
-    <div id = "gs6" class = "side-grid">gs6</div>
-    <div id = "gs7" class = "side-grid">gs7</div>
-    <div id = "gs8" class = "side-grid">gs8</div>
-    <div id = "gs9" class = "side-grid">gs9</div>
-   </div>
-   <div class="side" id = "side6"> 
-    <div id = "bs1" class = "side-grid">bs1</div>
-    <div id = "bs2" class = "side-grid">bs2</div>
-    <div id = "bs3" class = "side-grid">bs3</div>
-    <div id = "bs4" class = "side-grid">bs4</div>
-    <div id = "bs5" class = "side-grid">bs5</div>
-    <div id = "bs6" class = "side-grid">bs6</div>
-    <div id = "bs7" class = "side-grid">bs7</div>
-    <div id = "bs8" class = "side-grid">bs8</div>
-    <div id = "bs9" class = "side-grid">bs9</div> 
-  </div>
- </div>
- </div> 
-  <div id = 'compile' class = "rand-btn" >Сompile!</div>
-  <div id = 'rand'    class = "rand-btn" >Randomize!</div>
-  <div id = "controller" >
-  Click here and rotate!
-  </div>
- </div>
-<script type="text/javascript" src = "js/main.js"></script>
+<body>
+<div id="world"></div>
+<div id="r0" class="rotatew"></div>
+<div id="r1" class="rotatew"></div>
+<div id="r2" class="rotatew"></div>
+<div id="r3" class="rotatew"></div>
+<div id="r4" class="rotatew"></div>
+<div id="r5" class="rotatew"></div>
+<script src="js/three.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
