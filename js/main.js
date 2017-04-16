@@ -147,9 +147,15 @@ function init(event){
       //add listener for rotation
       world.addEventListener('mousemove', handleMouseMove, false);
       world.addEventListener('mousedown', function(event){ routAxis = !routAxis; }, false);
-      r0.addEventListener('click', function(event){ choiseSide(nameMass5); }, false);
-      r3.addEventListener('click', function(event){ choiseSide(nameMass1); }, false);
-      r4.addEventListener('click', function(event){ choiseSide(nameMass7); }, false);
+      r0.addEventListener('click', function(event){ choiseSide(nameMass1); }, false);
+      r1.addEventListener('click', function(event){ choiseSide(nameMass2); }, false);
+      r2.addEventListener('click', function(event){ choiseSide(nameMass3); }, false);
+      r3.addEventListener('click', function(event){ choiseSide(nameMass4); }, false);
+      r4.addEventListener('click', function(event){ choiseSide(nameMass5); }, false);
+      r5.addEventListener('click', function(event){ choiseSide(nameMass6); }, false);
+      r6.addEventListener('click', function(event){ choiseSide(nameMass7); }, false);
+      r7.addEventListener('click', function(event){ choiseSide(nameMass8); }, false);
+      r8.addEventListener('click', function(event){ choiseSide(nameMass9); }, false);
 }
 
 var cube = [];
@@ -172,6 +178,7 @@ function addRubicCub(){
         cube[n].mesh.position.z = k;
         cube[n].mesh.name = "" + i + j + k ;
         this.mesh.add(cube[n].mesh);
+
         n++;
       }
     }
@@ -229,8 +236,14 @@ function loop(){
 
 function checkNeedRotation(){
    if(nameMass1.rout === true)rotateGroup(group, 'x', nameMass1);    
-   if(nameMass7.rout === true)rotateGroup(group, 'z', nameMass7);
+   if(nameMass2.rout === true)rotateGroup(group, 'x', nameMass2);  
+   if(nameMass3.rout === true)rotateGroup(group, 'x', nameMass3);  
+   if(nameMass4.rout === true)rotateGroup(group, 'y', nameMass4);  
    if(nameMass5.rout === true)rotateGroup(group, 'y', nameMass5);  
+   if(nameMass6.rout === true)rotateGroup(group, 'y', nameMass6);  
+   if(nameMass7.rout === true)rotateGroup(group, 'z', nameMass7);
+   if(nameMass8.rout === true)rotateGroup(group, 'z', nameMass8);
+   if(nameMass9.rout === true)rotateGroup(group, 'z', nameMass9);
 }
 
 function updateCube(){
