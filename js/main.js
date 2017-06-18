@@ -78,63 +78,76 @@ function createCube(){
 }
 
 var group;
-var nameMass1 = ['-1-1-1', '-1-10', '-1-11', '0-1-1', '0-10', '0-11', '1-1-1', '1-10', '1-11'];
-nameMass1.currentRoutValueX = 0;
-nameMass1.currentRoutValueY = 0;
-nameMass1.currentRoutValueZ = 0;
-nameMass1.rout = false;
+x0Side = {
+nameMass: ['-1-1-1', '-1-10', '-1-11', '0-1-1', '0-10', '0-11', '1-1-1', '1-10', '1-11'],
+currentRoutValueX: 0,
+currentRoutValueY: 0,
+currentRoutValueZ: 0,
+rout: false
+ }
+ x1Side = {
+nameMass : ['-10-1',  '-100',  '-101',  '00-1',  '000',  '001',  '10-1',  '100',  '101' ],
+currentRoutValueX : 0,
+currentRoutValueY : 0,
+currentRoutValueZ : 0,
+rout : false
+}
 
-var nameMass2 = ['-10-1',  '-100',  '-101',  '00-1',  '000',  '001',  '10-1',  '100',  '101' ];
-nameMass2.currentRoutValueX = 0;
-nameMass2.currentRoutValueY = 0;
-nameMass2.currentRoutValueZ = 0;
-nameMass2.rout = false;
-
-
-var nameMass3 = ['-11-1',  '-110',  '-111',  '01-1',  '010',  '011',  '11-1',  '110',  '111' ];
-nameMass3.currentRoutValueX = 0;
-nameMass3.currentRoutValueY = 0;
-nameMass3.currentRoutValueZ = 0;
-nameMass3.rout = false;
-
+ x2Side ={
+nameMass :['-11-1',  '-110',  '-111',  '01-1',  '010',  '011',  '11-1',  '110',  '111' ],
+currentRoutValueX :0,
+currentRoutValueY: 0,
+currentRoutValueZ :0,
+rout :false
+}
 //y
-var nameMass4 = ['11-1',  '110',  '111',  '10-1',  '100',  '101',  '1-1-1',  '1-10',  '1-11' ];
-nameMass4.currentRoutValueX = 0;
-nameMass4.currentRoutValueY = 0;
-nameMass4.currentRoutValueZ = 0;
-nameMass4.rout = false;
+ y0Side ={
+nameMass :['11-1',  '110',  '111',  '10-1',  '100',  '101',  '1-1-1',  '1-10',  '1-11' ],
+currentRoutValueX: 0,
+currentRoutValueY: 0,
+currentRoutValueZ: 0,
+rout : false
+}
 
-var nameMass5 = ['01-1',  '010',  '011',  '00-1',  '000',  '001',  '0-1-1',  '0-10',  '0-11' ];
-nameMass5.currentRoutValueX = 0;
-nameMass5.currentRoutValueY = 0;
-nameMass5.currentRoutValueZ = 0;
-nameMass5.rout = false;
+ y1Side = {
+nameMass :['01-1',  '010',  '011',  '00-1',  '000',  '001',  '0-1-1',  '0-10',  '0-11' ],
+currentRoutValueX :0,
+currentRoutValueY: 0,
+currentRoutValueZ :0,
+rout : false
+}
 
-var nameMass6 = ['-11-1', '-110', '-111', '-10-1', '-100', '-101', '-1-1-1', '-1-10', '-1-11'];
-nameMass6.currentRoutValueX = 0;
-nameMass6.currentRoutValueY = 0;
-nameMass6.currentRoutValueZ = 0;
-nameMass6.rout = false;
-
+ y2Side = {
+nameMass : ['-11-1', '-110', '-111', '-10-1', '-100', '-101', '-1-1-1', '-1-10', '-1-11'],
+currentRoutValueX : 0,
+currentRoutValueY : 0,
+currentRoutValueZ : 0,
+rout : false
+}
 //z
-var nameMass7 = ['-1-11',  '-101',  '-111',  '0-11',  '001',  '011',  '1-11',  '101',  '111' ];
-nameMass7.currentRoutValueX = 0;
-nameMass7.currentRoutValueY = 0;
-nameMass7.currentRoutValueZ = 0;
-nameMass7.rout = false;
+ z0Side = {
+nameMass : ['-1-11',  '-101',  '-111',  '0-11',  '001',  '011',  '1-11',  '101',  '111' ],
+currentRoutValueX : 0,
+currentRoutValueY : 0,
+currentRoutValueZ : 0,
+rout : false
+}
 
-var nameMass8 = ['-1-10',  '-100',  '-110',  '0-10',  '000',  '010',  '1-10',  '100',  '110' ];
-nameMass8.currentRoutValueX = 0;
-nameMass8.currentRoutValueY = 0;
-nameMass8.currentRoutValueZ = 0;
-nameMass8.rout = false;
+z1Side = {
+ nameMass :['-1-10',  '-100',  '-110',  '0-10',  '000',  '010',  '1-10',  '100',  '110' ],
+currentRoutValueX :0,
+currentRoutValueY :0,
+currentRoutValueZ: 0,
+rout :false
+}
 
-var nameMass9 = ['-1-1-1', '-10-1', '-11-1', '0-1-1', '00-1', '01-1', '1-1-1', '10-1', '11-1'];
-nameMass9.currentRoutValueX = 0;
-nameMass9.currentRoutValueY = 0;
-nameMass9.currentRoutValueZ = 0;
-nameMass9.rout = false;
-
+z2Side = {
+nameMass :['-1-1-1', '-10-1', '-11-1', '0-1-1', '00-1', '01-1', '1-1-1', '10-1', '11-1'],
+currentRoutValueX: 0,
+currentRoutValueY: 0,
+currentRoutValueZ :0,
+rout :false
+}
 var routAxis = false;
 function init(event){
       createScene();
@@ -147,15 +160,15 @@ function init(event){
       //add listener for rotation
       world.addEventListener('mousemove', handleMouseMove, false);
       world.addEventListener('mousedown', function(event){ routAxis = !routAxis; }, false);
-      r0.addEventListener('click', function(event){ choiseSide(nameMass1); }, false);
-      r1.addEventListener('click', function(event){ choiseSide(nameMass2); }, false);
-      r2.addEventListener('click', function(event){ choiseSide(nameMass3); }, false);
-      r3.addEventListener('click', function(event){ choiseSide(nameMass4); }, false);
-      r4.addEventListener('click', function(event){ choiseSide(nameMass5); }, false);
-      r5.addEventListener('click', function(event){ choiseSide(nameMass6); }, false);
-      r6.addEventListener('click', function(event){ choiseSide(nameMass7); }, false);
-      r7.addEventListener('click', function(event){ choiseSide(nameMass8); }, false);
-      r8.addEventListener('click', function(event){ choiseSide(nameMass9); }, false);
+      r0.addEventListener('click', function(event){ choiseSide(x0Side); }, false);
+      r1.addEventListener('click', function(event){ choiseSide(x1Side); }, false);
+      r2.addEventListener('click', function(event){ choiseSide(x2Side); }, false);
+      r3.addEventListener('click', function(event){ choiseSide(y0Side); }, false);
+      r4.addEventListener('click', function(event){ choiseSide(y1Side); }, false);
+      r5.addEventListener('click', function(event){ choiseSide(y2Side); }, false);
+      r6.addEventListener('click', function(event){ choiseSide(z0Side); }, false);
+      r7.addEventListener('click', function(event){ choiseSide(z1Side); }, false);
+      r8.addEventListener('click', function(event){ choiseSide(z2Side); }, false);
 }
 
 var cube = [];
@@ -192,6 +205,8 @@ function rotateGroup(aGroup, axis, side){
 
    if(routValue <= Number(Math.PI/2).toFixed(4) && rout === true){
        routValue +=0.01;
+
+                 console.log("asdasdsdfewrd");
        switch (axis){
          case 'x': aGroup.rotation.x = side.currentRoutValueX + rubicCube.mesh.rotation.x + routValue; break;
          case 'y': aGroup.rotation.y = side.currentRoutValueY + rubicCube.mesh.rotation.y + routValue; break;
@@ -203,13 +218,20 @@ function rotateGroup(aGroup, axis, side){
      rout = false;
      routValue = 0;
      THREE.SceneUtils.attach(group, scene, rubicCube.mesh);
-     console.log(rubicCube); 
+    
+     console.log(side);
      switch (axis){
         case 'x':{
                  side.currentRoutValueX = ( Math.abs(side.currentRoutValueX - 2* Math.PI)) < 0.01 ? 0 : side.currentRoutValueX + Math.PI/2;                                                        
                  side.currentRoutValueY = aGroup.rotation.y;
                  side.currentRoutValueZ = aGroup.rotation.z;
-                 break; }
+                 
+                 console.log("asdasd");
+                 console.log(side.nameMass);
+                 side.nameMass = ['11-1',  '110',  '111',  '10-1',  '100',  '101',  '1-1-1',  '1-10',  '1-11' ];
+                 console.log("asdasd22");
+                 console.log(side.nameMass);
+                 break; } 
          case 'y':{
                   side.currentRoutValueY = ( Math.abs(side.currentRoutValueY - 2* Math.PI)) < 0.01 ? 0 : side.currentRoutValueY + Math.PI/2;                                                        
                   side.currentRoutValueX = aGroup.rotation.x;
@@ -235,15 +257,16 @@ function loop(){
 }
 
 function checkNeedRotation(){
-   if(nameMass1.rout === true)rotateGroup(group, 'x', nameMass1);    
-   if(nameMass2.rout === true)rotateGroup(group, 'x', nameMass2);  
-   if(nameMass3.rout === true)rotateGroup(group, 'x', nameMass3);  
-   if(nameMass4.rout === true)rotateGroup(group, 'y', nameMass4);  
-   if(nameMass5.rout === true)rotateGroup(group, 'y', nameMass5);  
-   if(nameMass6.rout === true)rotateGroup(group, 'y', nameMass6);  
-   if(nameMass7.rout === true)rotateGroup(group, 'z', nameMass7);
-   if(nameMass8.rout === true)rotateGroup(group, 'z', nameMass8);
-   if(nameMass9.rout === true)rotateGroup(group, 'z', nameMass9);
+
+   if(x0Side.rout === true)rotateGroup(group, 'x', x0Side);    
+   if(x1Side.rout === true)rotateGroup(group, 'x', x1Side);  
+   if(x2Side.rout === true)rotateGroup(group, 'x', x2Side);  
+   if(y0Side.rout === true)rotateGroup(group, 'y', y0Side);  
+   if(y1Side.rout === true)rotateGroup(group, 'y', y1Side);  
+   if(y2Side.rout === true)rotateGroup(group, 'y', y2Side);  
+   if(z0Side.rout === true)rotateGroup(group, 'z', z0Side);
+   if(z1Side.rout === true)rotateGroup(group, 'z', z1Side);
+   if(z2Side.rout === true)rotateGroup(group, 'z', z2Side);
 }
 
 function updateCube(){
@@ -267,14 +290,16 @@ function handleMouseMove(event) {
 }
 
 function choiseSide(side){
-  group = new THREE.Object3D();                    
+  group = new THREE.Object3D(); 
+  console.log(side) ;                  
   group.rotation.x = side.currentRoutValueX + rubicCube.mesh.rotation.x;
   group.rotation.y = side.currentRoutValueY + rubicCube.mesh.rotation.y;
   group.rotation.z = side.currentRoutValueZ + rubicCube.mesh.rotation.z;
 
-  for(let num = 0; num < side.length; num++){
-      THREE.SceneUtils.attach(scene.getObjectByName(side[num]), scene, group);
+  for(let num = 0; num < side.nameMass.length; num++){
+      THREE.SceneUtils.attach(scene.getObjectByName(side.nameMass[num]), scene, group);
   }
+
   scene.add( group );               
   rout = true;
   side.rout = true;
