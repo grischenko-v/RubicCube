@@ -1,6 +1,6 @@
 Simple RubicCube
 
-##Technologies
+####Technologies
 -- Three.js
 -- HTML5.
 
