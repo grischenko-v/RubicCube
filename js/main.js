@@ -205,8 +205,6 @@ function rotateGroup(aGroup, axis, side){
 
    if(routValue <= Number(Math.PI/2).toFixed(4) && rout === true){
        routValue +=0.01;
-
-                 console.log("asdasdsdfewrd");
        switch (axis){
          case 'x': aGroup.rotation.x = side.currentRoutValueX + rubicCube.mesh.rotation.x + routValue; break;
          case 'y': aGroup.rotation.y = side.currentRoutValueY + rubicCube.mesh.rotation.y + routValue; break;
@@ -225,12 +223,17 @@ function rotateGroup(aGroup, axis, side){
                  side.currentRoutValueX = ( Math.abs(side.currentRoutValueX - 2* Math.PI)) < 0.01 ? 0 : side.currentRoutValueX + Math.PI/2;                                                        
                  side.currentRoutValueY = aGroup.rotation.y;
                  side.currentRoutValueZ = aGroup.rotation.z;
-                 
+                     console.log(side.nameMass);
                  console.log("asdasd");
-                 console.log(side.nameMass);
-                 side.nameMass = ['11-1',  '110',  '111',  '10-1',  '100',  '101',  '1-1-1',  '1-10',  '1-11' ];
+                 console.log(y0Side.nameMass);
+                 //nameMass:       ['-1-1-1', '-1-10', '-1-11', '0-1-1', '0-10', '0-11', '1-1-1', '1-10', '1-11'],
+/* y0Side ={
+                         nameMass :['1-1-1',  '1-10',  '1-11' ],
+*/
+
+                 y0Side.nameMass = ['11-1',  '110',  '111',  '10-1',  '100',  '101', '-1-1-1' ];
                  console.log("asdasd22");
-                 console.log(side.nameMass);
+                 console.log(y0Side.nameMass);
                  break; } 
          case 'y':{
                   side.currentRoutValueY = ( Math.abs(side.currentRoutValueY - 2* Math.PI)) < 0.01 ? 0 : side.currentRoutValueY + Math.PI/2;                                                        
@@ -299,7 +302,7 @@ function choiseSide(side){
   for(let num = 0; num < side.nameMass.length; num++){
       THREE.SceneUtils.attach(scene.getObjectByName(side.nameMass[num]), scene, group);
   }
-
+ console.log(side.nameMass);
   scene.add( group );               
   rout = true;
   side.rout = true;
