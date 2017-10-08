@@ -1,10 +1,17 @@
-Simple RubicCube
-
+![screenshot of sample](https://grischenko-v.github.io/RubicCube/img/screen.png)
+#### Demo:
+###### https://grischenko-v.github.io/RubicCube/
+##
 #### Technologies
- - Three.js
- - HTML5.
+###### - Three JS
+###### - HTML5, CSS3
+##
+#### Browsers support
+###### - Chrome
+###### - FF
+###### - IE11
 
 #### TODO:
-- fix axis rotation.
-- add moving parts by mouse
-- support mobile devices(?)
+###### - fix axis rotation.
+###### - fix parts moving.
+###### - add moving parts by mouse.
