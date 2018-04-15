@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from '../logo.svg';
 import './App.css';
 import * as THREE from 'three';
+import filter from 'lodash/filter'
 import Cube from '../Cube/Cube';
 import Group from '../Group/Group';
 import PropTypes from 'prop-types';
@@ -51,6 +52,10 @@ class App extends Component {
 
         return points;    
 
+    }
+
+    _getSide(side, points){
+        
     }
 
     _initCoords(){
