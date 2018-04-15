@@ -38,7 +38,9 @@ class App extends Component {
 
 
 
-        console.log(this._generatePoints());
+        let points = this._generatePoints();
+
+        console.log(this._getSide(points, 'z', -1));
 
 
     }
@@ -54,8 +56,8 @@ class App extends Component {
 
     }
 
-    _getSide(side, points){
-        
+    _getSide(points, side, point){
+        return filter(points, function(o) { return o[side] === point; })
     }
 
     _initCoords(){
