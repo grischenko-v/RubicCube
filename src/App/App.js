@@ -35,6 +35,22 @@ class App extends Component {
         this.distance = 6;
 
 
+
+
+        console.log(this._generatePoints());
+
+
+    }
+
+    _generatePoints(){
+        let points = [];
+        for (var x = -1; x < 2; x++) 
+          for (var y = -1; y < 2; y++) 
+            for (var z = -1; z < 2; z++) 
+                points.push({x: x, y: y, z: z});
+
+        return points;    
+
     }
 
     _initCoords(){
