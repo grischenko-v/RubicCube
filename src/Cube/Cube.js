@@ -28,11 +28,8 @@ class Cube extends Component {
 
 
     componentDidUpdate() {
-        const { rotation, position } = this.props;
+        const { position } = this.props;
 
-        this.cube.rotation.x = rotation.x;
-        this.cube.rotation.y = rotation.y;
-        //this.cube.rotation.z = rotation.z;
 
         this.cube.position.x = position.x;
         this.cube.position.y = position.y;
