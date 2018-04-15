@@ -29,7 +29,8 @@ class App extends Component {
             phim: 0,
             thetam: 0,
             fov: 53,
-            a: 0
+            a: 0,
+            roteSide: 'z'
         }
 
         this.degToRad = Math.PI / 180;
@@ -38,9 +39,9 @@ class App extends Component {
 
 
 
-        let points = this._generatePoints();
+        this.points = this._generatePoints();
 
-        console.log(this._getSide(points, 'z', -1));
+        console.log(this._getSide(this.points, 'z', -1));
 
 
     }
@@ -49,8 +50,9 @@ class App extends Component {
         let points = [];
         for (var x = -1; x < 2; x++) 
           for (var y = -1; y < 2; y++) 
-            for (var z = -1; z < 2; z++) 
-                points.push({x: x, y: y, z: z});
+            for (var z = -1; z < 2; z++)
+
+                points.push({  name: "" + x + y + z, x: x, y: y, z: z});
 
         return points;    
 
@@ -96,12 +98,11 @@ class App extends Component {
             thetam: this.state.theta,
             phim: this.state.phi
         })
-
     }
+
+
     _onMouseMove(e) {
         let cameraParams = Object.assign({}, this.state);
-
-
 
         if(this.state.clicked){
             cameraParams.mmove.set(e.clientX, e.clientY);
@@ -129,12 +130,40 @@ class App extends Component {
         requestAnimationFrame(this.gameLoop);
          const { rotation1 } = this.state;
 
+
+
+
         this.setState({
-            rotation1: { x: rotation1.x + 0.01,
-                         y: rotation1.y + 0.01, },
+            rotation1: { 
+                    //x: rotation1.x + 0.01,
+                    ///y: rotation1.y + 0.01, 
+                       },
 
         });
     }
+
+    getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+    _getGroup(){
+        let sides = [-1, 0, 1];
+        let groupSide = getRandomInt(-1, 1);
+
+
+
+    }
+
+    _getCubes(side1, side2){
+        let cubes = [];
+
+
+
+
+        return cubes;
+
+
+    }
+
 
     render() {
         const { rotation1, cameraPosition, x, y } = this.state;
@@ -142,22 +171,11 @@ class App extends Component {
         let cubes = [];
 
 
+
             cubes.push(
-                    <Cube key = {123}  position={{x: 0, y: 0, z: 0}} 
-                         onRef={ref => (this.cuce1 = ref)} 
-                         rotation = {this.state.rotation1} />
+                     <Cube position={{x: 0, y: 0, z: -1}} rotation = {{x:0, y:0, z:0}}/>
                 )
-                   cubes.push(                       <Cube key = {124}  position={{x: 0, y: 0, z: 1}} 
-                                               onRef={ref => (this.cuce2 = ref)} 
-
-                                        rotation = {this.state.rotation1} />
-                                        )
-                  cubes.push(                        <Cube key = {125}  position={{x: 0, y: 1, z: 0}} 
-                                               onRef={ref => (this.cuce3 = ref)} 
-
-                                        rotation = {this.state.rotation1} />
-
-                                        )
+                 
 
         return (
             <div className="App" >
@@ -175,7 +193,7 @@ class App extends Component {
                                            cubePosition = {{x: 0, y: 0, z: 0}}
                                            >
                                                 <Group 
-                                                        rotation = {this.state.rotation1}
+                                                        rotation = {this.state.rotation1} side = 'z'
                                                     />
                                                 <Cube position={{x: 0, y: 0, z: -1}} rotation = {{x:0, y:0, z:0}}/>
                                                 <Cube position={{x: 0, y: 1, z: -1}} rotation = {{x:0, y:0, z:0}}/>
