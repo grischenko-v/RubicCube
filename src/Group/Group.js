@@ -30,10 +30,10 @@ class Group extends Component {
                 
 
 
-                //let geo = new THREE.EdgesGeometry( this.cube ); // or WireframeGeometry
-                //let mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 4 } );
-              //  let wireframe = new THREE.LineSegments( geo, mat );
-               // this.cube.add( wireframe );
+                let geo = new THREE.EdgesGeometry( this.cube.geometry ); // or WireframeGeometry
+                let mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 4 } );
+                let wireframe = new THREE.LineSegments( geo, mat );
+                this.cube.add( wireframe );
 
                 this.group.add(this.cube);
 
