@@ -22,13 +22,9 @@ class Group extends Component {
                 }
                 this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
                 this.cube = new THREE.Mesh(this.geometry, this.material);
-                
-
+            
 
                 this.cube.position.set(point.x,point.y,point.z);
-
-                
-
 
                 let geo = new THREE.EdgesGeometry( this.cube.geometry ); // or WireframeGeometry
                 let mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 4 } );
@@ -70,7 +66,8 @@ class Group extends Component {
        // console.log(this.group.rotation)
 
         this.group.rotation.z = rotation.z
-
+        this.group.rotation.y = rotation.y
+        this.group.rotation.x = rotation.x
 
 
         //this.group.rotation.z  <= Math.PI/2 ? this.group.rotation.z + 0.025 : this.group.rotation.z;
