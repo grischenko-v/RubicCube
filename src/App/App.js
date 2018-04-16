@@ -30,7 +30,8 @@ class App extends Component {
             thetam: 0,
             fov: 53,
             a: 0,
-            roteSide: 'z'
+            rotateSide: 'z',
+            groupSide: 1
         }
 
         this.degToRad = Math.PI / 180;
@@ -58,8 +59,8 @@ class App extends Component {
 
     }
 
-    _getSide(points, side, point){
-        return filter(points, function(o) { return o[side] === point; })
+    _getSide(side, point){
+        return filter(this.points, function(o) { return o[side] === point; })
     }
 
     _initCoords(){
@@ -128,16 +129,24 @@ class App extends Component {
 
     gameLoop = () => {
         requestAnimationFrame(this.gameLoop);
-         const { rotation1 } = this.state;
+        const { rotation1 } = this.state;
+        let rotation = this.state.rotation1;
 
+        switch (this.state.rotateSide){
+            case 'x': break;
+            case 'y': break;
+            case 'z':{
+                rotation.x = 0;
+                rotation.y = 0;
+                rotation.z += 0.025
+                
+                break;
+            }
 
-
+        }
 
         this.setState({
-            rotation1: { 
-                    //x: rotation1.x + 0.01,
-                    ///y: rotation1.y + 0.01, 
-                       },
+            rotation1: rotation
 
         });
     }
@@ -145,37 +154,34 @@ class App extends Component {
     getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
+
+
     _getGroup(){
         let sides = [-1, 0, 1];
-        let groupSide = getRandomInt(-1, 1);
+        let groupSide = this.getRandomInt(-1, 1);
+        let group;
 
+     //   console.log(this._getSide('z', 0))
+
+
+        return this._getSide('z', 0);
 
 
     }
 
-    _getCubes(side1, side2){
+    _getCubes(){
         let cubes = [];
 
-
-
-
-        return cubes;
-
-
+        let points1 = this._getSide(this.state.rotateSide,  1);
+        let points2 = this._getSide(this.state.rotateSide, -1);
+      
+        return points1.concat(points2);
     }
 
 
     render() {
         const { rotation1, cameraPosition, x, y } = this.state;
 
-        let cubes = [];
-
-
-
-            cubes.push(
-                     <Cube position={{x: 0, y: 0, z: -1}} rotation = {{x:0, y:0, z:0}}/>
-                )
-                 
 
         return (
             <div className="App" >
@@ -192,31 +198,12 @@ class App extends Component {
                                            position={cameraPosition}
                                            cubePosition = {{x: 0, y: 0, z: 0}}
                                            >
-                                                <Group 
-                                                        rotation = {this.state.rotation1} side = 'z'
-                                                    />
-                                                <Cube position={{x: 0, y: 0, z: -1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 0, y: 1, z: -1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 1, y: 1, z: -1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 1, y: 0, z: -1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 0, y: -1, z: -1}} rotation = {{x:0, y:0, z:0}}/> 
-                                                <Cube position={{x: -1, y: 0, z: -1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: -1, y: -1, z: -1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 1, y: -1, z: -1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x:-1, y: 1, z: -1}} rotation = {{x:0, y:0, z:0}}/>
-                                                
-                                                <Cube position={{x: 0, y: 0, z: 1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 0, y: 1, z: 1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 1, y: 1, z: 1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 1, y: 0, z: 1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 0, y: -1, z: 1}} rotation = {{x:0, y:0, z:0}}/> 
-                                                <Cube position={{x: -1, y: 0, z: 1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: -1, y: -1, z: 1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x: 1, y: -1, z: 1}} rotation = {{x:0, y:0, z:0}}/>
-                                                <Cube position={{x:-1, y: 1, z: 1}} rotation = {{x:0, y:0, z:0}}/>
-
-                                       
-
+                                     <Group rotation = {this.state.rotation1} points = {this._getGroup()} />
+                                               
+                                    {this._getCubes().map(function(point){
+                                        return  <Cube key = {point.name} position={{x: point.x, y: point.y, z: point.z}}/>
+                                        })
+                                    }
                         </PerspectiveCamera>
                     </ThreeScene>
                     <div>
