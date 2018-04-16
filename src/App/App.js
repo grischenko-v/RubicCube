@@ -30,12 +30,12 @@ class App extends Component {
             thetam: 0,
             fov: 53,
             a: 0,
-            rotateSide: 'z',
+            rotateSide: 'y',
             groupSide: 1
         }
 
         this.degToRad = Math.PI / 180;
-        this.distance = 6;
+        this.distance = 10;
 
 
 
@@ -133,12 +133,24 @@ class App extends Component {
         let rotation = this.state.rotation1;
 
         switch (this.state.rotateSide){
-            case 'x': break;
-            case 'y': break;
-            case 'z':{
-                rotation.x = 0;
+            case 'x':{
+                rotation.z = 0;
                 rotation.y = 0;
-                rotation.z += 0.025
+                rotation.x += 0.025
+                
+                break;
+            }
+            case 'y':{
+                rotation.z = 0;
+                rotation.y +=0.025;
+                rotation.x = 0;
+                
+                break;
+            }
+            case 'z':{
+                rotation.z += 0.25;
+                rotation.y = 0;
+                rotation.x = 0;
                 
                 break;
             }
@@ -161,11 +173,7 @@ class App extends Component {
         let groupSide = this.getRandomInt(-1, 1);
         let group;
 
-     //   console.log(this._getSide('z', 0))
-
-
-        return this._getSide('z', 0);
-
+        return this._getSide(this.state.rotateSide, -1);
 
     }
 
@@ -173,7 +181,7 @@ class App extends Component {
         let cubes = [];
 
         let points1 = this._getSide(this.state.rotateSide,  1);
-        let points2 = this._getSide(this.state.rotateSide, -1);
+        let points2 = this._getSide(this.state.rotateSide, 0);
       
         return points1.concat(points2);
     }
