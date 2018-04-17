@@ -37,12 +37,9 @@ class App extends Component {
         this.degToRad = Math.PI / 180;
         this.distance = 10;
 
-
-
-
         this.points = this._generatePoints();
 
-        console.log(this._getSide(this.points, 'z', -1));
+        //console.log(this._getSide(this.points, 'z', -1));
 
 
     }
@@ -99,6 +96,8 @@ class App extends Component {
             thetam: this.state.theta,
             phim: this.state.phi
         })
+
+        console.log(this.groupRef.getNewCoords() );
     }
 
 
@@ -206,7 +205,9 @@ class App extends Component {
                                            position={cameraPosition}
                                            cubePosition = {{x: 0, y: 0, z: 0}}
                                            >
-                                     <Group rotation = {this.state.rotation1} points = {this._getGroup()} />
+                                     <Group rotation = {this.state.rotation1} points = {this._getGroup()}
+                                        onRef={ref => (this.groupRef = ref)}
+                                      />
                                                
                                     {this._getCubes().map(function(point){
                                         return  <Cube key = {point.name} position={{x: point.x, y: point.y, z: point.z}}/>

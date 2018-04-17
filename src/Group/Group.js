@@ -47,18 +47,26 @@ class Group extends Component {
 
 
     componentDidMount() {
-        //this.props.onRef(this.group)
+        this.props.onRef(this)
     }
 
     getCoords(){
         var position1 = new THREE.Vector3();
         position1.setFromMatrixPosition( this.cube1.matrixWorld );
 
+
+
+    }
+
+    getNewCoords(){
+
+        console.log(123);
     }
 
     componentWillUnmount() {
-       // this.props.onRef(undefined)
+        this.props.onRef(undefined)
     }
+
 
 
     componentDidUpdate() {
