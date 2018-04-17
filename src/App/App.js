@@ -39,9 +39,6 @@ class App extends Component {
 
         this.points = this._generatePoints();
 
-        //console.log(this._getSide(this.points, 'z', -1));
-
-
     }
 
     _generatePoints(){
@@ -96,8 +93,6 @@ class App extends Component {
             thetam: this.state.theta,
             phim: this.state.phi
         })
-
-        console.log(this.groupRef.getNewCoords() );
     }
 
 
@@ -141,8 +136,14 @@ class App extends Component {
             }
             case 'y':{
                 rotation.z = 0;
-                rotation.y +=0.025;
                 rotation.x = 0;
+                if(rotation.y <= Math.PI/2 )
+                    rotation.y +=0.025;
+                else
+                    {  
+                    this.groupRef.getNewCoords();
+
+                    }
                 
                 break;
             }
