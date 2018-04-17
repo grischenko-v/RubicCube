@@ -11,7 +11,7 @@ class Group extends Component {
         this.group = new THREE.Group();;
 
         
-
+        this.cubes = [];
         this.props.points.forEach((function(point){
 
             this.geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -31,15 +31,20 @@ class Group extends Component {
                 let wireframe = new THREE.LineSegments( geo, mat );
                 this.cube.add( wireframe );
 
-                this.group.add(this.cube);
+                this.cube.name = point.name;
+                
+                this.cubes.push(this.cube);
 
         }).bind(this));       
 
                 
+         
+        console.log(this.cubes);
 
-        console.log(this.props.points);
+        this.cubes.forEach((function(cube){
+            this.group.add(cube);
 
-      
+        }).bind(this))
         this.context.scene.add(this.group);
         
 
@@ -60,7 +65,14 @@ class Group extends Component {
 
     getNewCoords(){
 
-        console.log(123);
+        
+        this.cubes.forEach(function(cube){
+            var position = new THREE.Vector3();
+            position.setFromMatrixPosition( cube.matrixWorld );
+            console.log(cube.name + ',  ' + Math.round(position.x) + ',' + Math.round(position.y)+ ',' + Math.round(position.z)); 
+        })
+        
+
     }
 
     componentWillUnmount() {
@@ -71,24 +83,10 @@ class Group extends Component {
 
     componentDidUpdate() {
         const { rotation } = this.props;
-       // console.log(this.group.rotation)
 
         this.group.rotation.z = rotation.z
         this.group.rotation.y = rotation.y
         this.group.rotation.x = rotation.x
-
-
-        //this.group.rotation.z  <= Math.PI/2 ? this.group.rotation.z + 0.025 : this.group.rotation.z;
-       // this.group.rotation.y +=0.01 ;
-       // this.group.rotation.z = this.props.rotation.z;    
-      /* if(this.group.rotation.z ){
-       var position1 = new THREE.Vector3();
-        position1.setFromMatrixPosition( this.cube1.matrixWorld );
-      //  console.log(position1.x + ',' + position1.y + ',' + position1.z);
-        position1.setFromMatrixPosition( this.cube2.matrixWorld );
-      //  console.log(2222)
-      //  console.log(position1.x + ',' + position1.y + ',' + position1.z);
-       }*/
       
     }
 
