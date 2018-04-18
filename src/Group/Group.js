@@ -8,7 +8,7 @@ class Group extends Component {
 
     componentWillMount() {
         
-        this.group = new THREE.Group();;
+        this.group = new THREE.Group();
 
         
         this.cubes = [];
@@ -45,6 +45,8 @@ class Group extends Component {
             this.group.add(cube);
 
         }).bind(this))
+
+       
         this.context.scene.add(this.group);
         
 
@@ -64,15 +66,27 @@ class Group extends Component {
     }
 
     getNewCoords(){
+        var mas = [];
 
-        
         this.cubes.forEach(function(cube){
-            var position = new THREE.Vector3();
-            position.setFromMatrixPosition( cube.matrixWorld );
-            console.log(cube.name + ',  ' + Math.round(position.x) + ',' + Math.round(position.y)+ ',' + Math.round(position.z)); 
-        })
-        
+          
 
+           
+
+            var position = new THREE.Vector3();
+
+           position =  cube.matrixWorld.getPosition();
+           // console.log(position);
+            mas.push({
+                name: cube.name,
+                x: Math.round(position.x),
+                y: Math.round(position.y),
+                z: Math.round(position.z)
+            })
+        })
+         this.group.matrixAutoUpdate = false;
+        this.group.updateMatrix();
+        return mas;
     }
 
     componentWillUnmount() {
