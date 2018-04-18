@@ -36,7 +36,8 @@ class App extends Component {
 
         this.degToRad = Math.PI / 180;
         this.distance = 10;
-
+        this.stop = false;
+        this.stop1 = false;
         this.points = this._generatePoints();
 
     }
@@ -121,11 +122,30 @@ class App extends Component {
         this.gameLoop();
     }
 
+    updateCoords(arr){
+
+        this.points.forEach((function(point){
+            arr.forEach((function(item){
+                 if(item.name === point.name){
+                    console.log(point)
+                    console.log(item)
+                    point.x = item.x;
+                    point.y = item.y;
+                    point.z = item.z;
+                    
+                 }
+            }).bind(this))
+        }).bind(this))
+        
+        
+    }
+
+
     gameLoop = () => {
         requestAnimationFrame(this.gameLoop);
         const { rotation1 } = this.state;
         let rotation = this.state.rotation1;
-
+       
         switch (this.state.rotateSide){
             case 'x':{
                 rotation.z = 0;
@@ -137,12 +157,15 @@ class App extends Component {
             case 'y':{
                 rotation.z = 0;
                 rotation.x = 0;
-                if(rotation.y <= Math.PI/2 )
+                if(rotation.y <= Math.PI/2 && !this.stop )
                     rotation.y +=0.025;
-                else
+                else if(!this.stop1)
                     {  
-                    this.groupRef.getNewCoords();
-
+                   console.log( this.groupRef.getNewCoords());
+                   this.updateCoords( this.groupRef.getNewCoords());
+                   rotation.y = 0;
+                   this.stop = true;
+                   this.stop1 = true;
                     }
                 
                 break;
