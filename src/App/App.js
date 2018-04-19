@@ -14,8 +14,6 @@ class App extends Component {
     constructor(props) {
         super(props);
 
-        this.cubePositions = this._initCoords();
-
         this.state = {
             rotation1: { x: 0, y: 0, z: 0 },
             cameraPosition: {x: 0, y: 0, z: 10},
@@ -48,7 +46,12 @@ class App extends Component {
           for (var y = -1; y < 2; y++) 
             for (var z = -1; z < 2; z++)
 
-                points.push({  name: "" + x + y + z, x: x, y: y, z: z});
+                points.push({ 
+                     name: "" + x + y + z, 
+                     x: x,
+                     y: y, 
+                     z: z
+                 });
 
         return points;    
 
@@ -56,19 +59,6 @@ class App extends Component {
 
     _getSide(side, point){
         return filter(this.points, function(o) { return o[side] === point; })
-    }
-
-    _initCoords(){
-        let mas = [];
-        for(let x = -1; x < 2; x++){
-            for(let y = -1; y < 2; y++){
-                for(let z = -1; z < 2; z++){
-                    mas.push({x: x, y: y, z: z});
-                }
-            }
-        }
-     
-        return mas;
     }
 
     _updateCamera(){
