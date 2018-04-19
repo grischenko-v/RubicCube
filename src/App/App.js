@@ -145,7 +145,7 @@ class App extends Component {
         requestAnimationFrame(this.gameLoop);
         const { rotation1 } = this.state;
         let rotation = this.state.rotation1;
-       
+        
         switch (this.state.rotateSide){
             case 'x':{
                 rotation.z = 0;
@@ -157,15 +157,18 @@ class App extends Component {
             case 'y':{
                 rotation.z = 0;
                 rotation.x = 0;
-                if(rotation.y <= Math.PI/2 && !this.stop )
-                    rotation.y +=0.025;
-                else if(!this.stop1)
+                if(rotation.y <= Math.PI/2  ){
+                    console.log(rotation.y);
+                    rotation.y +=0.025;}
+                else// if(!this.stop1)
                     {  
-                   console.log( this.groupRef.getNewCoords());
-                   this.updateCoords( this.groupRef.getNewCoords());
-                   rotation.y = 0;
-                   this.stop = true;
-                   this.stop1 = true;
+                        console.log(rotation.y)
+                     //  console.log( this.groupRef.getNewCoords());
+                       this.updateCoords( this.groupRef.getNewCoords());
+                       rotation.y = 0;
+                       this.stop = true;
+                       this.stop1 = true;
+                       console.log(this.state.rotation1.y);
                     }
                 
                 break;
