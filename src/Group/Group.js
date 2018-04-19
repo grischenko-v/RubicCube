@@ -10,17 +10,29 @@ class Group extends Component {
     componentWillMount() {
         
         this.group = new THREE.Group();
-
+        this.counter = 0;
         
         this.cubes = [];
         this.props.points.forEach((function(point){
 
             this.geometry = new THREE.BoxGeometry(1, 1, 1);
-            for ( let i = 0; i < this.geometry.faces.length; i +=2 ) {
-                    let color =  Math.random() * 0xffffff;
-                    this.geometry.faces[ i ].color.setHex(color);
-                    this.geometry.faces[ i + 1 ].color.setHex(color);
-                }
+             this.geometry.faces[ 0 ].color.setHex(0x0000ff);
+                    this.geometry.faces[ 0 + 1 ].color.setHex(0x0000ff);
+
+                    this.geometry.faces[ 2 ].color.setHex(0xff0000);
+                    this.geometry.faces[ 2 + 1 ].color.setHex(0xff0000);
+
+                    this.geometry.faces[ 4 ].color.setHex(0x00ff00);
+                    this.geometry.faces[ 4 + 1 ].color.setHex(0x00ff00);
+
+                    this.geometry.faces[ 6 ].color.setHex(0x4fab5b);
+                    this.geometry.faces[ 6 + 1 ].color.setHex(0x4fab5b);
+
+                    this.geometry.faces[ 8 ].color.setHex(0xdf541e);
+                    this.geometry.faces[ 8 + 1 ].color.setHex(0xdf541e);
+
+                    this.geometry.faces[ 10 ].color.setHex(0xf9ae34);
+                    this.geometry.faces[ 10 + 1 ].color.setHex(0xf9ae34);
                 this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
                 this.cube = new THREE.Mesh(this.geometry, this.material);
             
@@ -69,14 +81,29 @@ class Group extends Component {
         this.props.points.forEach((function(point){
 
             this.geometry = new THREE.BoxGeometry(1, 1, 1);
-            for ( let i = 0; i < this.geometry.faces.length; i +=2 ) {
-                    let color =  Math.random() * 0xffffff;
-                    this.geometry.faces[ i ].color.setHex(color);
-                    this.geometry.faces[ i + 1 ].color.setHex(color);
-                }
+           // for ( let i = 0; i < this.geometry.faces.length; i +=2 ) {
+                  //  let color =  Math.random() * 0xffffff;
+                    this.geometry.faces[ 0 ].color.setHex(0x0000ff);
+                    this.geometry.faces[ 0 + 1 ].color.setHex(0x0000ff);
+
+                    this.geometry.faces[ 2 ].color.setHex(0xff0000);
+                    this.geometry.faces[ 2 + 1 ].color.setHex(0xff0000);
+
+                    this.geometry.faces[ 4 ].color.setHex(0x00ff00);
+                    this.geometry.faces[ 4 + 1 ].color.setHex(0x00ff00);
+
+                    this.geometry.faces[ 6 ].color.setHex(0x4fab5b);
+                    this.geometry.faces[ 6 + 1 ].color.setHex(0x4fab5b);
+
+                    this.geometry.faces[ 8 ].color.setHex(0xdf541e);
+                    this.geometry.faces[ 8 + 1 ].color.setHex(0xdf541e);
+
+                    this.geometry.faces[ 10 ].color.setHex(0xf9ae34);
+                    this.geometry.faces[ 10 + 1 ].color.setHex(0xf9ae34);
+              //  }
                 this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
                 this.cube = new THREE.Mesh(this.geometry, this.material);
-            
+                this.cube.rotation.y =  Math.PI/2 * this.counter;
 
                 this.cube.position.set(point.x,point.y,point.z);
 
@@ -116,7 +143,7 @@ class Group extends Component {
 
     getNewCoords(){
         var mas = [];
-
+        this.counter++;
         this.cubes.forEach(function(cube){
 
             var position = new THREE.Vector3();
@@ -146,11 +173,11 @@ class Group extends Component {
 
     componentDidUpdate() {
         const { rotation } = this.props;
-        console.log(rotation.y);
+        //console.log(rotation.y);
         this.group.rotation.z = rotation.z
         this.group.rotation.y = rotation.y
         this.group.rotation.x = rotation.x
-      
+        
     }
 
     render() {
