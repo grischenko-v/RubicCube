@@ -38,6 +38,7 @@ class Group extends Component {
             
 
                 this.cube.position.set(point.x,point.y,point.z);
+                this.cube.rotation.set(point.rotationX, point.rotationY, point.rotationY )
 
                 let geo = new THREE.EdgesGeometry( this.cube.geometry ); // or WireframeGeometry
                 let mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 4 } );
