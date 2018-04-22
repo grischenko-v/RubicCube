@@ -34,9 +34,9 @@ class App extends Component {
 
         this.degToRad = Math.PI / 180;
         this.distance = 10;
-        this.stop = false;
-        this.stop1 = false;
+
         this.points = this._generatePoints();
+        this.cubePoints = [];
 
     }
 
@@ -230,9 +230,11 @@ class App extends Component {
                                         onRef={ref => (this.groupRef = ref)}
                                       />
                                                
-                                    {this._getCubes().map(function(point){
-                                        return  <Cube key = {point.name} position={{x: point.x, y: point.y, z: point.z}}/>
-                                        })
+                                    {this._getCubes().map((function(point, index){
+                                        return  <Cube key = {point.name} position={{x: point.x, y: point.y, z: point.z}}
+                                                onRef={ref => (this.cubePoints[index] = ref)}
+                                        />
+                                        }).bind(this))
                                     }
                         </PerspectiveCamera>
                     </ThreeScene>
