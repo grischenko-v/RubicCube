@@ -51,10 +51,6 @@ class Group extends Component {
 
         }).bind(this));       
 
-                
-         
-        console.log(this.cubes);
-
         this.cubes.forEach((function(cube){
             this.group.add(cube);
 
