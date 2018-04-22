@@ -50,7 +50,10 @@ class App extends Component {
                      name: "" + x + y + z, 
                      x: x,
                      y: y, 
-                     z: z
+                     z: z,
+                     rotationX: 0,
+                     rotationY: 0,
+                     rotationZ: 0
                  });
 
         return points;    
