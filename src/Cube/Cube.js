@@ -25,7 +25,9 @@ class Cube extends Component {
         this.cube.add( wireframe );
     }
 
-
+    deleteCube(){
+        this.context.scene.remove(this.cube);
+    }
 
     componentDidUpdate() {
         const { position } = this.props;
@@ -35,6 +37,17 @@ class Cube extends Component {
         this.cube.position.y = position.y;
         this.cube.position.z = position.z;
     }
+
+
+
+    componentDidMount() {
+        this.props.onRef(this)
+    }
+
+    componentWillUnmount() {
+        this.props.onRef(undefined)
+    }
+
 
     render() {
         return null;
