@@ -29,13 +29,20 @@ class Cube extends Component {
         this.context.scene.remove(this.cube);
     }
 
+
+    
+    
     componentDidUpdate() {
-        const { position } = this.props;
+        const { position, rotation } = this.props;
 
 
         this.cube.position.x = position.x;
         this.cube.position.y = position.y;
         this.cube.position.z = position.z;
+
+        this.cube.rotation.x = rotation.x;
+        this.cube.rotation.x = rotation.y;
+        this.cube.rotation.x = rotation.z;
     }
 
 

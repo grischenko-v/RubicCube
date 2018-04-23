@@ -231,7 +231,9 @@ class App extends Component {
                                       />
                                                
                                     {this._getCubes().map((function(point, index){
-                                        return  <Cube key = {point.name} position={{x: point.x, y: point.y, z: point.z}}
+                                        return  <Cube key = {point.name} 
+                                                position={{x: point.x, y: point.y, z: point.z}}
+                                                rotation={{x: point.rotationX, y: point.rotationY, z: point.rotationZ}}
                                                 onRef={ref => (this.cubePoints[index] = ref)}
                                         />
                                         }).bind(this))
