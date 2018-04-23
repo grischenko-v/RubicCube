@@ -228,6 +228,7 @@ class App extends Component {
                                            >
                                      <Group rotation = {this.state.rotation1} points = {this._getGroup()}
                                         onRef={ref => (this.groupRef = ref)}
+                                        rotationSide = {this.state.rotateSide}
                                       />
                                                
                                     {this._getCubes().map((function(point, index){
