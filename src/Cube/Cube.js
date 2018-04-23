@@ -27,10 +27,38 @@ class Cube extends Component {
 
     deleteCube(){
         this.context.scene.remove(this.cube);
+        this.cube = null;
     }
 
 
     
+    componentWillUpdate(){
+        if(!this.cube){
+             this.geometry = new THREE.BoxGeometry(1, 1, 1);
+
+
+        for ( let i = 0; i < this.geometry.faces.length; i +=2 ) {
+            let color =  Math.random() * 0xffffff;
+            this.geometry.faces[ i ].color.setHex(color);
+            this.geometry.faces[ i + 1 ].color.setHex(color);
+        }
+
+
+        this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
+        this.cube = new THREE.Mesh(this.geometry, this.material);
+
+        this.context.scene.add(this.cube);
+
+        let geo = new THREE.EdgesGeometry( this.cube.geometry ); // or WireframeGeometry
+        let mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 4 } );
+        let wireframe = new THREE.LineSegments( geo, mat );
+        this.cube.add( wireframe );
+
+
+        }
+
+    }
+
     
     componentDidUpdate() {
         const { position, rotation } = this.props;
