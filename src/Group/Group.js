@@ -5,6 +5,12 @@ import * as THREE from 'three';
 class Group extends Component {
 
 
+    constructor(props) {
+        super(props);
+
+
+    }
+
 
 
     componentWillMount() {
@@ -56,7 +62,7 @@ class Group extends Component {
 
         }).bind(this))
 
-       
+        this.side = this.props.rotationSide;
         this.context.scene.add(this.group);
         
 
@@ -100,6 +106,8 @@ class Group extends Component {
               //  }
                 this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
                 this.cube = new THREE.Mesh(this.geometry, this.material);
+                
+
                 this.cube.rotation.y =  Math.PI/2 * this.counter;
 
                 this.cube.position.set(point.x,point.y,point.z);
@@ -124,7 +132,7 @@ class Group extends Component {
 
         }).bind(this))
 
-       
+        this.side = this.props.rotationSide;
         this.context.scene.add(this.group);
         }
     }
@@ -138,12 +146,21 @@ class Group extends Component {
 
     }
 
-    getNewCoords(){
-        var mas = [];
+    getNewCoords(side){
+        let mas = [];
+        
         this.counter++;
+        
         this.cubes.forEach(function(cube){
+        
 
-            var position = new THREE.Vector3();
+        let position = new THREE.Vector3();
+
+        let rotataion = {
+            x: cube.rotation.x,
+            y: cube.rotation.y,
+            z: cube.rotation.z
+        };
 
            position =  cube.matrixWorld.getPosition();
            // console.log(position);
@@ -151,7 +168,16 @@ class Group extends Component {
                 name: cube.name,
                 x: Math.round(position.x),
                 y: Math.round(position.y),
-                z: Math.round(position.z)
+                z: Math.round(position.z),
+                rotationX: side =='x' ?
+                    rotataion.x + Math.Pi /2 <  Math.Pi * 2 ? rotataion.x + Math.PI/2 : 0
+                    : rotataion.x,
+                rotationX: side =='y' ?
+                    rotataion.x + Math.Pi /2 <  Math.Pi * 2 ? rotataion.x + Math.PI/2 : 0
+                    : rotataion.y,
+                rotationX: side =='z' ?
+                    rotataion.x + Math.Pi /2 <  Math.Pi * 2 ? rotataion.x + Math.PI/2 : 0
+                    : rotataion.z
             })
         })
         this.group.matrixAutoUpdate = false;
