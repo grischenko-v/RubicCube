@@ -107,11 +107,12 @@ class Group extends Component {
                 this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
                 this.cube = new THREE.Mesh(this.geometry, this.material);
                 
-
-                this.cube.rotation.y =  Math.PI/2 * this.counter;
+                this.cube.rotation.x =  point.rotationX
+                this.cube.rotation.y =  point.rotationY//Math.PI/2 * this.counter;
+                this.cube.rotation.z =  point.rotationZ
 
                 this.cube.position.set(point.x,point.y,point.z);
-
+                console.log(point);
                 let geo = new THREE.EdgesGeometry( this.cube.geometry ); // or WireframeGeometry
                 let mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 4 } );
                 let wireframe = new THREE.LineSegments( geo, mat );
@@ -125,7 +126,7 @@ class Group extends Component {
 
                 
          
-        console.log(this.cubes);
+        
 
         this.cubes.forEach((function(cube){
             this.group.add(cube);
@@ -170,13 +171,13 @@ class Group extends Component {
                 y: Math.round(position.y),
                 z: Math.round(position.z),
                 rotationX: side =='x' ?
-                    rotataion.x + Math.Pi /2 <  Math.Pi * 2 ? rotataion.x + Math.PI/2 : 0
+                    (rotataion.x + Math.PI /2 <  Math.PI * 2) ? rotataion.x + Math.PI/2 : 0
                     : rotataion.x,
-                rotationX: side =='y' ?
-                    rotataion.x + Math.Pi /2 <  Math.Pi * 2 ? rotataion.x + Math.PI/2 : 0
+                rotationY: side =='y' ?
+                    (rotataion.x + Math.PI /2 <  Math.PI * 2) ? rotataion.y + Math.PI/2 : 0
                     : rotataion.y,
-                rotationX: side =='z' ?
-                    rotataion.x + Math.Pi /2 <  Math.Pi * 2 ? rotataion.x + Math.PI/2 : 0
+                rotationZ: side =='z' ?
+                    (rotataion.x + Math.PI /2 <  Math.PI * 2 )? rotataion.z + Math.PI/2 : 0
                     : rotataion.z
             })
         })
@@ -184,7 +185,7 @@ class Group extends Component {
         this.group.updateMatrix();
         this.context.scene.remove(this.group);
         this.group = null;
-
+        console.log(mas);
         return mas;
     }
 
