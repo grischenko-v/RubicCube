@@ -120,14 +120,15 @@ class App extends Component {
         this.points.forEach((function(point){
             arr.forEach((function(item){
                  if(item.name === point.name){
-                    console.log(point)
-                    console.log(item)
+                    ///console.log(point)
+                    ///console.log(item)
                     point.x = item.x;
                     point.y = item.y;
                     point.z = item.z;
                     point.rotationX = item.rotationX;
                     point.rotationY = item.rotationY;
                     point.rotationZ = item.rotationZ;
+                  //  console.log(point);
                  }
             }).bind(this))
         }).bind(this))
