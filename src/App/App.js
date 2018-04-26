@@ -146,7 +146,16 @@ class App extends Component {
             case 'x':{
                 rotation.z = 0;
                 rotation.y = 0;
-                rotation.x += 0.025
+                if(rotation.x <= Math.PI/2  ){
+                    rotation.x +=0.025;}
+                else
+                    {  
+                       
+                       var r =  this.groupRef.getNewCoords(this.state.rotateSide);
+
+                       this.updateCoords(r);
+                       rotation.x = 0;
+                    }
                 
                 break;
             }
@@ -167,9 +176,18 @@ class App extends Component {
                 break;
             }
             case 'z':{
-                rotation.z += 0.25;
-                rotation.y = 0;
                 rotation.x = 0;
+                rotation.y = 0;
+                if(rotation.z <= Math.PI/2  ){
+                    rotation.z +=0.025;}
+                else
+                    {  
+                       
+                       var r =  this.groupRef.getNewCoords(this.state.rotateSide);
+
+                       this.updateCoords(r);
+                       rotation.z = 0;
+                    }
                 
                 break;
             }
@@ -192,7 +210,7 @@ class App extends Component {
         let groupSide = this.getRandomInt(-1, 1);
         let group;
 
-        return this._getSide(this.state.rotateSide, -1);
+        return this._getSide(this.state.rotateSide, 0);
 
     }
 
@@ -200,7 +218,7 @@ class App extends Component {
         let cubes = [];
 
         let points1 = this._getSide(this.state.rotateSide,  1);
-        let points2 = this._getSide(this.state.rotateSide, 0);
+        let points2 = this._getSide(this.state.rotateSide, -1);
       
         return points1.concat(points2);
     }
