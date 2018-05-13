@@ -79,6 +79,7 @@ class Group extends Component {
 
         {this.group = new THREE.Group();
 
+       // console.log(this.props.points);
         
         this.cubes = [];
         this.props.points.forEach((function(point){
@@ -112,7 +113,7 @@ class Group extends Component {
                 this.cube.rotation.z =  point.rotationZ
 
                 this.cube.position.set(point.x,point.y,point.z);
-                console.log(point);
+              //  console.log(point);
                 let geo = new THREE.EdgesGeometry( this.cube.geometry ); // or WireframeGeometry
                 let mat = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 4 } );
                 let wireframe = new THREE.LineSegments( geo, mat );
@@ -150,8 +151,8 @@ class Group extends Component {
     getNewCoords(side){
         let mas = [];
         
-        this.counter++;
-        
+
+        if(this.group){
         this.cubes.forEach(function(cube){
         
 
@@ -167,26 +168,29 @@ class Group extends Component {
            // console.log(position);
             mas.push({
                 name: cube.name,
-                x: Math.round(position.x),
-                y: Math.round(position.y),
-                z: Math.round(position.z),
+                x: Math.abs( Math.round(position.x)) === 0 ? 0 : Math.round(position.x),
+                y: Math.abs( Math.round(position.y)) === 0 ? 0 : Math.round(position.y),
+                z: Math.abs( Math.round(position.z)) === 0 ? 0 : Math.round(position.z),
                 rotationX: side =='x' ?
-                    (rotataion.x + Math.PI /2 <  Math.PI * 2) ? rotataion.x + Math.PI/2 : 0
+                    (rotataion.x + Math.PI /2)
                     : rotataion.x,
                 rotationY: side =='y' ?
-                    (rotataion.x + Math.PI /2 <  Math.PI * 2) ? rotataion.y + Math.PI/2 : 0
+                    (rotataion.y + Math.PI /2)
                     : rotataion.y,
                 rotationZ: side =='z' ?
-                    (rotataion.x + Math.PI /2 <  Math.PI * 2 )? rotataion.z + Math.PI/2 : 0
+                    (rotataion.z + Math.PI /2) 
                     : rotataion.z
             })
         })
+        
         this.group.matrixAutoUpdate = false;
         this.group.updateMatrix();
         this.context.scene.remove(this.group);
         this.group = null;
-        console.log(mas);
+       // console.log(mas);
         return mas;
+        }
+        return ;
     }
 
     componentWillUnmount() {
@@ -198,10 +202,11 @@ class Group extends Component {
     componentDidUpdate() {
         const { rotation } = this.props;
         //console.log(rotation.y);
-        this.group.rotation.z = rotation.z
-        this.group.rotation.y = rotation.y
-        this.group.rotation.x = rotation.x
-        
+        if(this.group){
+            this.group.rotation.z = rotation.z
+            this.group.rotation.y = rotation.y
+            this.group.rotation.x = rotation.x
+        }
     }
 
     render() {
