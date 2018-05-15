@@ -28,7 +28,7 @@ class App extends Component {
             thetam: 0,
             fov: 53,
             a: 0,
-            rotateSide: 'z',
+            rotateSide: 'y',
             groupSide: 1
         }
 
@@ -40,7 +40,8 @@ class App extends Component {
         this.points = this._generatePoints();
         this.cubePoints = [];
         this.begin = true;
-        this.groupPoints = this._getGroup()
+        this.groupPoints = this._getGroup();
+        this.otherPoints  = this._getCubes('y');
     }
 
     _generatePoints(){
@@ -156,7 +157,8 @@ class App extends Component {
                         });
               if(!this.stop){  
                 var r =  this.groupRef.getNewCoords(this.rotateSide);
-                console.log(r);
+
+               
                 this.updateCoords(r);
                 this.stop = true;
             }
@@ -169,25 +171,29 @@ class App extends Component {
 
                 else
                     {  
-                       console.log( this.groupPoints)
+                     
                        var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                      /* this.cubePoints.forEach(function(cube){
-                            cube.deleteCube();
-                       })*/
+                       this.cubePoints.forEach(function(cube){
+                           cube && cube.deleteCube();
+                       })
                        this.updateCoords(r);
                         rotation.x = 0;
 
-                        switch(this.getRandomInt(0, 2)){
-                            case 0: newRotationSide = 'x'; break; 
-                            case 1: newRotationSide = 'y'; break; 
-                            case 2: newRotationSide = 'z'; break; 
+                       switch(this.getRandomInt(0, 2)){
+                         //   case 0: newRotationSide = 'x'; break; 
+                         //   case 1: newRotationSide = 'y'; break; 
+                            //case 2: newRotationSide = 'z'; break; 
                         }
+
+                         this.otherPoints  = this._getCubes(newRotationSide);
                          this.updateCoords(r);
                     this.setState({
-                        rotateSide: newRotationSide
+                       // rotateSide: newRotationSide
                     })
                       this.stop = false;
                     this.groupPoints = this._getGroup()
+
+                   
                
                    console.log( this.groupPoints)
                                 this.setState({
@@ -195,8 +201,8 @@ class App extends Component {
                       
 
                     });
-
-
+                     
+                      console.log(this.otherPoints);
                     }
                 
                 break;
@@ -226,26 +232,31 @@ class App extends Component {
 
                 else
                     {  
-                       console.log( this.groupPoints)
+                      
                        var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                      /* this.cubePoints.forEach(function(cube){
-                            cube.deleteCube();
-                       })*/
+                       this.cubePoints.forEach(function(cube){
+                          cube && cube.deleteCube();
+                       })
                        this.updateCoords(r);
                         rotation.y = 0;
 
                         switch(this.getRandomInt(0, 2)){
-                            case 0: newRotationSide = 'x'; break; 
-                            case 1: newRotationSide = 'y'; break; 
-                            case 2: newRotationSide = 'z'; break; 
+                              case 0: newRotationSide = 'x'; break; 
+                           // case 1: newRotationSide = 'y'; break; 
+                           // case 2: newRotationSide = 'z'; break; 
                         }
                          this.updateCoords(r);
+                          this.otherPoints  = this._getCubes(newRotationSide);
+
+
                     this.setState({
-                        rotateSide: newRotationSide 
+                        rotateSide: newRotationSide
                     })
+
+
                       this.stop = false;
                     this.groupPoints = this._getGroup()
-               
+                    
                    console.log( this.groupPoints)
                                 this.setState({
                         rotation1: rotation
@@ -253,7 +264,8 @@ class App extends Component {
 
                     });
 
-
+                   
+                    console.log(this.otherPoints);
                     }
                 
                 break;
@@ -282,23 +294,24 @@ class App extends Component {
                     {  
                        console.log( this.groupPoints)
                        var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                      /* this.cubePoints.forEach(function(cube){
-                            cube.deleteCube();
-                       })*/
+                      this.cubePoints && this.cubePoints.forEach(function(cube){
+                           // cube.deleteCube();
+                       });
                        this.updateCoords(r);
                         rotation.z = 0;
 
-                       switch(this.getRandomInt(0, 2)){
+                        switch(this.getRandomInt(0, 2)){
                             case 0: newRotationSide = 'x'; break; 
                             case 1: newRotationSide = 'y'; break; 
                             case 2: newRotationSide = 'z'; break; 
                         }
                          this.updateCoords(r);
                     this.setState({
-                        rotateSide: newRotationSide
+                        //rotateSide: newRotationSide
                     })
                       this.stop = false;
-                    this.groupPoints = this._getGroup()
+                    this.groupPoints = this._getGroup();
+                    this.otherPoints  = this._getCubes();
                
                    console.log( this.groupPoints)
                                 this.setState({
@@ -336,7 +349,7 @@ class App extends Component {
 
     }
 
-    _getCubes(){
+    _getCubes(rotateSide){
         let sides = [-1, 0, 1];
         let poitsSides = [];
 
@@ -345,8 +358,8 @@ class App extends Component {
                 poitsSides.push(side);
         }.bind(this))
 
-        let points1 = this._getSide(this.state.rotateSide,  poitsSides[0]);
-        let points2 = this._getSide(this.state.rotateSide, poitsSides[1]);
+        let points1 = this._getSide(rotateSide,  poitsSides[0]);
+        let points2 = this._getSide(rotateSide, poitsSides[1]);
       
         return points1.concat(points2);
     }
@@ -360,6 +373,25 @@ class App extends Component {
                                         onRef={ref => (this.groupRef = ref)}
                                         rotationSide = {this.state.rotateSide}
                                       />
+
+        let points = [];
+
+              {this.otherPoints.map((function(point, index){
+                                       points.push( <Cube key = {point.name}
+                                                        position={{
+                                                            x: point.x, 
+                                                            y: point.y, 
+                                                            z: point.z
+                                                        }}
+                                                        rotation = {{
+                                                            x: point.rotationX,
+                                                            y: point.rotationY,
+                                                            z: point.rotationZ 
+                                                        }}
+                                                        onRef={ref => (this.cubePoints[index] = ref)}
+                                                    />
+                                    )}).bind(this))} 
+                                              
 
         return (
             <div className="App" >
@@ -376,8 +408,8 @@ class App extends Component {
                                            position={cameraPosition}
                                            cubePosition = {{x: 0, y: 0, z: 0}}
                                            >
-                                     
                                               {group} 
+                                              {points}
                                    
                         </PerspectiveCamera>
                     </ThreeScene>

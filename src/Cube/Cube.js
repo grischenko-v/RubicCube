@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import * as THREE from 'three';
 
 class Cube extends Component {
+     constructor(props) {
+        super(props);
+
+
+    }
+
+
     componentWillMount() {
         this.geometry = new THREE.BoxGeometry(1, 1, 1);
 
@@ -15,6 +22,8 @@ class Cube extends Component {
 
 
         this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
+
+        
         this.cube = new THREE.Mesh(this.geometry, this.material);
 
         this.context.scene.add(this.cube);
@@ -34,6 +43,7 @@ class Cube extends Component {
     
     componentWillUpdate(){
         if(!this.cube){
+            console.log(123213123);
              this.geometry = new THREE.BoxGeometry(1, 1, 1);
 
 
