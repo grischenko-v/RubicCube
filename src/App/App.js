@@ -180,15 +180,15 @@ class App extends Component {
                         rotation.x = 0;
 
                        switch(this.getRandomInt(0, 2)){
-                         //   case 0: newRotationSide = 'x'; break; 
-                         //   case 1: newRotationSide = 'y'; break; 
+                        //   case 0: newRotationSide = 'x'; break; 
+                            case 1: newRotationSide = 'y'; break; 
                             //case 2: newRotationSide = 'z'; break; 
                         }
 
                          this.otherPoints  = this._getCubes(newRotationSide);
                          this.updateCoords(r);
                     this.setState({
-                       // rotateSide: newRotationSide
+                        rotateSide: newRotationSide
                     })
                       this.stop = false;
                     this.groupPoints = this._getGroup()
