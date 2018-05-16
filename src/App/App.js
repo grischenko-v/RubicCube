@@ -29,7 +29,7 @@ class App extends Component {
             fov: 53,
             a: 0,
             rotateSide: 'y',
-            groupSide: 1
+            groupSide: 0
         }
 
 
@@ -148,181 +148,121 @@ class App extends Component {
         let newRotationSide = this.state.rotateSide;
          this.groupPoints = this._getGroup()
         switch (this.state.rotateSide){
-           case 'x':{
-
+            case 'x':{
                 this.setState({
                        rotation1: rotation
-          
-
-                        });
-              if(!this.stop){  
-                var r =  this.groupRef.getNewCoords(this.rotateSide);
-
-               
-                this.updateCoords(r);
-                this.stop = true;
-            }
-
+                });
+                if(!this.stop){  
+                    var r =  this.groupRef.getNewCoords(this.rotateSide);
+                    this.updateCoords(r);
+                    this.stop = true;
+                }
                 rotation.z = 0;
                 rotation.y = 0;
                 if(rotation.x <= Math.PI/2  ){
-                    rotation.x +=0.025;
-                }
-
-                else
-                    {  
-                     
-                       var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                       this.cubePoints.forEach(function(cube){
-                           cube && cube.deleteCube();
-                       })
-                       this.updateCoords(r);
-                        rotation.x = 0;
-
-                       switch(this.getRandomInt(0, 2)){
-                        //   case 0: newRotationSide = 'x'; break; 
-                            case 1: newRotationSide = 'y'; break; 
-                            //case 2: newRotationSide = 'z'; break; 
-                        }
-
-                         this.otherPoints  = this._getCubes(newRotationSide);
-                         this.updateCoords(r);
-                    this.setState({
-                        rotateSide: newRotationSide
+                    rotation.x += 0.025;
+                }else{  
+                    var r =  this.groupRef.getNewCoords(this.state.rotateSide);
+                    this.cubePoints.forEach(function(cube){
+                        cube && cube.deleteCube();
                     })
-                      this.stop = false;
-                    this.groupPoints = this._getGroup()
+                    this.updateCoords(r);
+                    rotation.x = 0;
 
-                   
-               
-                   console.log( this.groupPoints)
-                                this.setState({
-                        rotation1: rotation
-                      
-
-                    });
-                     
-                      console.log(this.otherPoints);
+                    switch(this.getRandomInt(0, 2)){
+                        case 0: newRotationSide = 'x'; break; 
+                        case 1: newRotationSide = 'y'; break; 
+                        // case 2: newRotationSide = 'z'; break; 
                     }
-                
+
+                    this.otherPoints  = this._getCubes(newRotationSide);
+                    this.updateCoords(r);
+                    this.setState({
+                        rotateSide: newRotationSide,
+                        //groupSide: this.getRandomInt(-1, 1)
+                        rotation1: rotation
+                    })
+                    this.stop = false;
+                    this.groupPoints = this._getGroup()
+                }
                 break;
             }
-
-
-
             case 'y':{
-
                 this.setState({
                        rotation1: rotation
-          
-
-                        });
-              if(!this.stop){  
-                var r =  this.groupRef.getNewCoords(this.rotateSide);
-                console.log(r);
-                this.updateCoords(r);
-                this.stop = true;
-            }
-
+                });
+                if(!this.stop){  
+                    var r =  this.groupRef.getNewCoords(this.rotateSide);
+                    this.updateCoords(r);
+                    this.stop = true;
+                }
                 rotation.z = 0;
                 rotation.x = 0;
                 if(rotation.y <= Math.PI/2  ){
-                    rotation.y +=0.025;
-                }
-
-                else
-                    {  
-                      
-                       var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                       this.cubePoints.forEach(function(cube){
-                          cube && cube.deleteCube();
-                       })
-                       this.updateCoords(r);
-                        rotation.y = 0;
-
-                        switch(this.getRandomInt(0, 2)){
-                              case 0: newRotationSide = 'x'; break; 
-                           // case 1: newRotationSide = 'y'; break; 
-                           // case 2: newRotationSide = 'z'; break; 
-                        }
-                         this.updateCoords(r);
-                          this.otherPoints  = this._getCubes(newRotationSide);
-
-
-                    this.setState({
-                        rotateSide: newRotationSide
+                    rotation.y += 0.025;
+                }else{  
+                    var r =  this.groupRef.getNewCoords(this.state.rotateSide);
+                    this.cubePoints.forEach(function(cube){
+                        cube && cube.deleteCube();
                     })
+                    this.updateCoords(r);
+                    rotation.y = 0;
 
-
-                      this.stop = false;
-                    this.groupPoints = this._getGroup()
-                    
-                   console.log( this.groupPoints)
-                                this.setState({
-                        rotation1: rotation
-                      
-
-                    });
-
-                   
-                    console.log(this.otherPoints);
+                    switch(this.getRandomInt(0, 2)){
+                        case 0: newRotationSide = 'x'; break; 
+                        case 1: newRotationSide = 'y'; break; 
+                        // case 2: newRotationSide = 'z'; break; 
                     }
-                
+
+                    this.otherPoints  = this._getCubes(newRotationSide);
+                    this.updateCoords(r);
+                    this.setState({
+                        rotateSide: newRotationSide,
+                        //groupSide: this.getRandomInt(-1, 1)
+                        rotation1: rotation
+                    })
+                    this.stop = false;
+                    this.groupPoints = this._getGroup()
+                }
                 break;
             }
-              case 'z':{
-
+            case 'z':{
                 this.setState({
                        rotation1: rotation
-          
-
-                        });
-              if(!this.stop){  
-                var r =  this.groupRef.getNewCoords(this.rotateSide);
-                console.log(r);
-                this.updateCoords(r);
-                this.stop = true;
-            }
-
-                rotation.y = 0;
-                rotation.x = 0;
-                if(rotation.z <= Math.PI/2  ){
-                    rotation.z +=0.025;
+                });
+                if(!this.stop){  
+                    var r =  this.groupRef.getNewCoords(this.rotateSide);
+                    this.updateCoords(r);
+                    this.stop = true;
                 }
-
-                else
-                    {  
-                       console.log( this.groupPoints)
-                       var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                      this.cubePoints && this.cubePoints.forEach(function(cube){
-                           // cube.deleteCube();
-                       });
-                       this.updateCoords(r);
-                        rotation.z = 0;
-
-                        switch(this.getRandomInt(0, 2)){
-                            case 0: newRotationSide = 'x'; break; 
-                            case 1: newRotationSide = 'y'; break; 
-                            case 2: newRotationSide = 'z'; break; 
-                        }
-                         this.updateCoords(r);
-                    this.setState({
-                        //rotateSide: newRotationSide
+                rotation.x = 0;
+                rotation.y = 0;
+                if(rotation.z <= Math.PI/2  ){
+                    rotation.z += 0.025;
+                }else{  
+                    var r =  this.groupRef.getNewCoords(this.state.rotateSide);
+                    this.cubePoints.forEach(function(cube){
+                        cube && cube.deleteCube();
                     })
-                      this.stop = false;
-                    this.groupPoints = this._getGroup();
-                    this.otherPoints  = this._getCubes();
-               
-                   console.log( this.groupPoints)
-                                this.setState({
-                        rotation1: rotation
-                      
+                    this.updateCoords(r);
+                    rotation.z = 0;
 
-                    });
-
-
+                    switch(this.getRandomInt(0, 2)){
+                        case 0: newRotationSide = 'x'; break; 
+                        case 1: newRotationSide = 'y'; break; 
+                        // case 2: newRotationSide = 'z'; break; 
                     }
-                
+
+                    this.otherPoints  = this._getCubes(newRotationSide);
+                    this.updateCoords(r);
+                    this.setState({
+                        rotateSide: newRotationSide,
+                        //groupSide: this.getRandomInt(-1, 1)
+                        rotation1: rotation
+                    })
+                    this.stop = false;
+                    this.groupPoints = this._getGroup()
+                }
                 break;
             }
 
