@@ -57,7 +57,13 @@ class App extends Component {
                      z: z,
                      rotationX: 0,
                      rotationY: 0,
-                     rotationZ: 0
+                     rotationZ: 0,
+                     side0: '0x0000ff',
+                     side1: '0xff0000',
+                     side2: '0x00ff00',
+                     side3: '0x4fab5b',
+                     side4: '0xdf541e',
+                     side5: '0xf9ae34'
                  });
 
         return points;    
@@ -131,8 +137,8 @@ class App extends Component {
                     point.z = item.z;
                     point.rotationX = item.rotationX % (Math.PI * 2);
                     point.rotationY = item.rotationY % (Math.PI * 2);
-                    point.rotationZ = item.rotationZ % (Math.PI * 2);
-                    point.visibile = true;
+                    point.rotationZ = item.rotationZ % (Math.PI * 2);                    
+
                   //  console.log(point);
                  }
             }).bind(this))
@@ -172,18 +178,17 @@ class App extends Component {
                         // case 1: newRotationSide = 'y'; break; 
                         // case 2: newRotationSide = 'z'; break; 
                     }
-                    newRotationSide = 'y';
+                    newRotationSide = 'z';
                     this.otherPoints  = this._getCubes(newRotationSide);
                     this.updateCoords(r);
                     this.setState({
                         rotateSide: newRotationSide,
-                        groupSide: this.getRandomInt(-1, 1),
+                        //groupSide: this.getRandomInt(-1, 1),
                         rotation1: rotation
                     })
                     this.stop = false;
                     this.groupPoints = this._getGroup()
-                    console.log(this.otherPoints)
-                    console.log(this.groupPoints);
+                    console.log(this.points)
                 }
                 break;
             }
@@ -215,7 +220,7 @@ class App extends Component {
                     this.updateCoords(r);
                     this.setState({
                         rotateSide: newRotationSide,
-                        groupSide: this.getRandomInt(-1, 1),
+                        groupSide: this.getRandomInt(-1, 2),
                         rotation1: rotation
                     })
                     this.stop = false;
@@ -253,7 +258,7 @@ class App extends Component {
                     this.updateCoords(r);
                     this.setState({
                         rotateSide: newRotationSide,
-                        groupSide: this.getRandomInt(-1, 1),
+                       // groupSide: this.getRandomInt(-1, 2),
                         rotation1: rotation
                     })
                     this.stop = false;
@@ -278,7 +283,7 @@ class App extends Component {
 
     _getGroup(){
         let sides = [-1, 0, 1];
-        let groupSide = this.getRandomInt(-1, 1);
+        let groupSide = this.getRandomInt(-1, 2);
         let group = this._getSide(this.state.rotateSide, this.state.groupSide);
         group.map((point)=>{
             point.visibile = false
@@ -353,6 +358,7 @@ class App extends Component {
                                                         }}
                                                         onRef={ref => (this.cubePoints[index] = ref)}
                                                         visibile = {point.visibile}
+                                                        point = {point}
                                                     />
                                     )}).bind(this))} 
                                               

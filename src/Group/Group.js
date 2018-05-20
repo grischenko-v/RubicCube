@@ -22,23 +22,23 @@ class Group extends Component {
         this.props.points.forEach((function(point){
 
             this.geometry = new THREE.BoxGeometry(1, 1, 1);
-             this.geometry.faces[ 0 ].color.setHex(0x0000ff);
-                    this.geometry.faces[ 0 + 1 ].color.setHex(0x0000ff);
+                    this.geometry.faces[ 0 ].color.setHex(point.side0);
+                    this.geometry.faces[ 0 + 1 ].color.setHex(point.side0);
 
-                    this.geometry.faces[ 2 ].color.setHex(0xff0000);
-                    this.geometry.faces[ 2 + 1 ].color.setHex(0xff0000);
+                    this.geometry.faces[ 2 ].color.setHex(point.side1);
+                    this.geometry.faces[ 2 + 1 ].color.setHex(point.side1);
 
-                    this.geometry.faces[ 4 ].color.setHex(0x00ff00);
-                    this.geometry.faces[ 4 + 1 ].color.setHex(0x00ff00);
+                    this.geometry.faces[ 4 ].color.setHex(point.side2);
+                    this.geometry.faces[ 4 + 1 ].color.setHex(point.side2);
 
-                    this.geometry.faces[ 6 ].color.setHex(0x4fab5b);
-                    this.geometry.faces[ 6 + 1 ].color.setHex(0x4fab5b);
+                    this.geometry.faces[ 6 ].color.setHex(point.side3);
+                    this.geometry.faces[ 6 + 1 ].color.setHex(point.side3);
 
-                    this.geometry.faces[ 8 ].color.setHex(0xdf541e);
-                    this.geometry.faces[ 8 + 1 ].color.setHex(0xdf541e);
+                    this.geometry.faces[ 8 ].color.setHex(point.side4);
+                    this.geometry.faces[ 8 + 1 ].color.setHex(point.side4);
 
-                    this.geometry.faces[ 10 ].color.setHex(0xf9ae34);
-                    this.geometry.faces[ 10 + 1 ].color.setHex(0xf9ae34);
+                    this.geometry.faces[ 10 ].color.setHex(point.side5);
+                    this.geometry.faces[ 10 + 1 ].color.setHex(point.side5);
                 this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
                 this.cube = new THREE.Mesh(this.geometry, this.material);
             
@@ -87,23 +87,23 @@ class Group extends Component {
             this.geometry = new THREE.BoxGeometry(1, 1, 1);
            // for ( let i = 0; i < this.geometry.faces.length; i +=2 ) {
                   //  let color =  Math.random() * 0xffffff;
-                    this.geometry.faces[ 0 ].color.setHex(0x0000ff);
-                    this.geometry.faces[ 0 + 1 ].color.setHex(0x0000ff);
+                    this.geometry.faces[ 0 ].color.setHex(point.side0);
+                    this.geometry.faces[ 0 + 1 ].color.setHex(point.side0);
 
-                    this.geometry.faces[ 2 ].color.setHex(0xff0000);
-                    this.geometry.faces[ 2 + 1 ].color.setHex(0xff0000);
+                    this.geometry.faces[ 2 ].color.setHex(point.side1);
+                    this.geometry.faces[ 2 + 1 ].color.setHex(point.side1);
 
-                    this.geometry.faces[ 4 ].color.setHex(0x00ff00);
-                    this.geometry.faces[ 4 + 1 ].color.setHex(0x00ff00);
+                    this.geometry.faces[ 4 ].color.setHex(point.side2);
+                    this.geometry.faces[ 4 + 1 ].color.setHex(point.side2);
 
-                    this.geometry.faces[ 6 ].color.setHex(0x4fab5b);
-                    this.geometry.faces[ 6 + 1 ].color.setHex(0x4fab5b);
+                    this.geometry.faces[ 6 ].color.setHex(point.side3);
+                    this.geometry.faces[ 6 + 1 ].color.setHex(point.side3);
 
-                    this.geometry.faces[ 8 ].color.setHex(0xdf541e);
-                    this.geometry.faces[ 8 + 1 ].color.setHex(0xdf541e);
+                    this.geometry.faces[ 8 ].color.setHex(point.side4);
+                    this.geometry.faces[ 8 + 1 ].color.setHex(point.side4);
 
-                    this.geometry.faces[ 10 ].color.setHex(0xf9ae34);
-                    this.geometry.faces[ 10 + 1 ].color.setHex(0xf9ae34);
+                    this.geometry.faces[ 10 ].color.setHex(point.side5);
+                    this.geometry.faces[ 10 + 1 ].color.setHex(point.side5);
               //  }
                 this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
                 this.cube = new THREE.Mesh(this.geometry, this.material);
