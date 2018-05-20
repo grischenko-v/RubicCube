@@ -164,9 +164,6 @@ class App extends Component {
                     rotation.x += 0.025;
                 }else{  
                     var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                    this.cubePoints.forEach(function(cube){
-                      //  cube.deleteCube();
-                    })
                     this.updateCoords(r);
                     rotation.x = 0;
 
@@ -205,9 +202,6 @@ class App extends Component {
                     rotation.y += 0.025;
                 }else{  
                     var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                    this.cubePoints.forEach(function(cube){
-                      //  cube &&  cube.deleteCube();
-                    })
                     this.updateCoords(r);
                     rotation.y = 0;
 
@@ -227,6 +221,7 @@ class App extends Component {
                     this.stop = false;
                     this.groupPoints = this._getGroup()
 
+
                 }
                 break;
             }
@@ -245,9 +240,6 @@ class App extends Component {
                     rotation.z += 0.025;
                 }else{  
                     var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                    this.cubePoints.forEach(function(cube){
-                     //   cube && cube.deleteCube();
-                    })
                     this.updateCoords(r);
                     rotation.z = 0;
 
