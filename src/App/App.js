@@ -16,7 +16,7 @@ class App extends Component {
 
         this.state = {
             rotation1: { x: 0, y: 0, z: 0 },
-            cameraPosition: {x: 0, y: 0, z: 10},
+            cameraPosition: {x: 8.4, y: 3.8, z: 3.9},
             x: 0,
             y: 0,
             clicked: false, 
@@ -28,7 +28,7 @@ class App extends Component {
             thetam: 0,
             fov: 53,
             a: 0,
-            rotateSide: 'y',
+            rotateSide: 'x',
             groupSide: 0
         }
 
@@ -41,7 +41,7 @@ class App extends Component {
         this.cubePoints = [];
         this.begin = true;
         this.groupPoints = this._getGroup();
-        this.otherPoints  = this._getCubes('y');
+        this.otherPoints  = this._getCubes('x');
     }
 
     _generatePoints(){
@@ -132,6 +132,7 @@ class App extends Component {
                     point.rotationX = item.rotationX % (Math.PI * 2);
                     point.rotationY = item.rotationY % (Math.PI * 2);
                     point.rotationZ = item.rotationZ % (Math.PI * 2);
+                    point.visibile = true;
                   //  console.log(point);
                  }
             }).bind(this))
@@ -164,26 +165,28 @@ class App extends Component {
                 }else{  
                     var r =  this.groupRef.getNewCoords(this.state.rotateSide);
                     this.cubePoints.forEach(function(cube){
-                        cube && cube.deleteCube();
+                      //  cube.deleteCube();
                     })
                     this.updateCoords(r);
                     rotation.x = 0;
 
                     switch(this.getRandomInt(0, 2)){
-                        case 0: newRotationSide = 'x'; break; 
-                        case 1: newRotationSide = 'y'; break; 
+                        // case 0: newRotationSide = 'x'; break; 
+                        // case 1: newRotationSide = 'y'; break; 
                         // case 2: newRotationSide = 'z'; break; 
                     }
-
+                    newRotationSide = 'y';
                     this.otherPoints  = this._getCubes(newRotationSide);
                     this.updateCoords(r);
                     this.setState({
                         rotateSide: newRotationSide,
-                        //groupSide: this.getRandomInt(-1, 1)
+                        groupSide: this.getRandomInt(-1, 1),
                         rotation1: rotation
                     })
                     this.stop = false;
                     this.groupPoints = this._getGroup()
+                    console.log(this.otherPoints)
+                    console.log(this.groupPoints);
                 }
                 break;
             }
@@ -203,7 +206,7 @@ class App extends Component {
                 }else{  
                     var r =  this.groupRef.getNewCoords(this.state.rotateSide);
                     this.cubePoints.forEach(function(cube){
-                        cube && cube.deleteCube();
+                      //  cube &&  cube.deleteCube();
                     })
                     this.updateCoords(r);
                     rotation.y = 0;
@@ -211,18 +214,19 @@ class App extends Component {
                     switch(this.getRandomInt(0, 2)){
                         case 0: newRotationSide = 'x'; break; 
                         case 1: newRotationSide = 'y'; break; 
-                        // case 2: newRotationSide = 'z'; break; 
+                        case 2: newRotationSide = 'z'; break; 
                     }
-
+                    newRotationSide = 'z';
                     this.otherPoints  = this._getCubes(newRotationSide);
                     this.updateCoords(r);
                     this.setState({
                         rotateSide: newRotationSide,
-                        //groupSide: this.getRandomInt(-1, 1)
+                        groupSide: this.getRandomInt(-1, 1),
                         rotation1: rotation
                     })
                     this.stop = false;
                     this.groupPoints = this._getGroup()
+
                 }
                 break;
             }
@@ -242,22 +246,22 @@ class App extends Component {
                 }else{  
                     var r =  this.groupRef.getNewCoords(this.state.rotateSide);
                     this.cubePoints.forEach(function(cube){
-                        cube && cube.deleteCube();
+                     //   cube && cube.deleteCube();
                     })
                     this.updateCoords(r);
                     rotation.z = 0;
 
-                    switch(this.getRandomInt(0, 2)){
-                        case 0: newRotationSide = 'x'; break; 
-                        case 1: newRotationSide = 'y'; break; 
-                        // case 2: newRotationSide = 'z'; break; 
+                    switch(this.getRandomInt(1, 3)){
+                        //case 0: newRotationSide = 'x'; break; 
+                       //case 1: newRotationSide = 'y'; break; 
+                       //case 2: newRotationSide = 'z'; break; 
                     }
-
+                    newRotationSide = 'x';
                     this.otherPoints  = this._getCubes(newRotationSide);
                     this.updateCoords(r);
                     this.setState({
                         rotateSide: newRotationSide,
-                        //groupSide: this.getRandomInt(-1, 1)
+                        groupSide: this.getRandomInt(-1, 1),
                         rotation1: rotation
                     })
                     this.stop = false;
@@ -283,15 +287,29 @@ class App extends Component {
     _getGroup(){
         let sides = [-1, 0, 1];
         let groupSide = this.getRandomInt(-1, 1);
-        let group;
+        let group = this._getSide(this.state.rotateSide, this.state.groupSide);
+        group.map((point)=>{
+            point.visibile = false
+        })
 
-        return this._getSide(this.state.rotateSide, this.state.groupSide);
+        // console.log(group);
+
+        this.points.forEach((function(point){
+            group.forEach((function(item){
+                 if(item.name === point.name){
+                    point.visibile = false;
+
+                 }
+            }).bind(this))
+        }).bind(this))
+        return group
 
     }
 
     _getCubes(rotateSide){
         let sides = [-1, 0, 1];
         let poitsSides = [];
+        let points = [];
 
         sides.forEach(function(side){
             if(this.state.groupSide != side)
@@ -300,8 +318,20 @@ class App extends Component {
 
         let points1 = this._getSide(rotateSide,  poitsSides[0]);
         let points2 = this._getSide(rotateSide, poitsSides[1]);
-      
-        return points1.concat(points2);
+
+        points = points1.concat(points2);
+
+
+        this.points.forEach((function(point){
+            points.forEach((function(item){
+                 if(item.name === point.name){
+                    point.visibile = true;
+
+                 }
+            }).bind(this))
+        }).bind(this))
+
+        return  points
     }
 
 
@@ -312,11 +342,12 @@ class App extends Component {
         const group = <Group rotation = {this.state.rotation1} points = { this.groupPoints }
                                         onRef={ref => (this.groupRef = ref)}
                                         rotationSide = {this.state.rotateSide}
+
                                       />
 
         let points = [];
 
-              {this.otherPoints.map((function(point, index){
+              {this.points.map((function(point, index){
                                        points.push( <Cube key = {point.name}
                                                         position={{
                                                             x: point.x, 
@@ -329,6 +360,7 @@ class App extends Component {
                                                             z: point.rotationZ 
                                                         }}
                                                         onRef={ref => (this.cubePoints[index] = ref)}
+                                                        visibile = {point.visibile}
                                                     />
                                     )}).bind(this))} 
                                               
