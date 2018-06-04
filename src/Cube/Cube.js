@@ -13,21 +13,15 @@ class Cube extends Component {
 
     componentWillMount() {
 
-        if(this.cube && !this.props.visibile){
+        if(this.cube && !this.props.visibile ){
               this.context.scene.remove(this.cube);
               this.cube = null;
-              console.log(123);
+             
         }
 
        else if(!this.cube && this.props.visibile){
 
             this.geometry = new THREE.BoxGeometry(1, 1, 1);
-
-           /* for ( let i = 0; i < this.geometry.faces.length; i +=2 ) {
-                let color =  Math.random() * 0xffffff;
-                this.geometry.faces[ i ].color.setHex(color);
-                this.geometry.faces[ i + 1 ].color.setHex(color);
-            }*/
 
 
              this.geometry.faces[ 0 ].color.setHex(this.props.point.side0);
@@ -51,9 +45,15 @@ class Cube extends Component {
 
             this.material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, vertexColors: THREE.FaceColors});
 
+             this.cube = new THREE.Mesh(this.geometry, this.material);
 
-            this.cube = new THREE.Mesh(this.geometry, this.material);
+            this.cube.rotation.x =  this.props.point.rotationX
+                this.cube.rotation.y =  this.props.point.rotationY
+                this.cube.rotation.z =  this.props.point.rotationZ
 
+                this.cube.position.set(this.props.point.x, this.props.point.y, this.props.point.z);
+
+           
             this.context.scene.add(this.cube);
 
             let geo = new THREE.EdgesGeometry( this.cube.geometry ); // or WireframeGeometry
@@ -62,26 +62,11 @@ class Cube extends Component {
             this.cube.add( wireframe );
         }
 
-         if(this.cube){
-            this.cube.position.x =  this.props.position.x;
-            this.cube.position.y =  this.props.position.y;
-            this.cube.position.z =  this.props.position.z;
-
-            this.cube.rotation.x =  this.props.rotation.x;
-            this.cube.rotation.x =  this.props.rotation.y;
-            this.cube.rotation.x =  this.props.rotation.z;
-        }
-    }
-
-    deleteCube(){
-     //   this.context.scene.remove(this.cube);
-      //  this.cube = null;
     }
 
 
-    
+
     componentWillUpdate(){
-       
          if(!!this.cube && !this.props.visibile){
               this.context.scene.remove(this.cube);
               this.cube = null;
@@ -89,13 +74,6 @@ class Cube extends Component {
 
         else if(!this.cube && this.props.visibile){
             this.geometry = new THREE.BoxGeometry(1, 1, 1);
-
-            // for ( let i = 0; i < this.geometry.faces.length; i +=2 ) {
-            //     let color =  Math.random() * 0xffffff;
-            //     this.geometry.faces[ i ].color.setHex(color);
-            //     this.geometry.faces[ i + 1 ].color.setHex(color);
-            // }
-            
 
             this.geometry.faces[ 0 ].color.setHex(this.props.point.side0);
 
@@ -121,6 +99,13 @@ class Cube extends Component {
 
             this.cube = new THREE.Mesh(this.geometry, this.material);
 
+             this.cube.rotation.x =  this.props.point.rotationX
+                this.cube.rotation.y =  this.props.point.rotationY
+                this.cube.rotation.z =  this.props.point.rotationZ
+
+                this.cube.position.set(this.props.point.x, this.props.point.y, this.props.point.z);
+
+
             this.context.scene.add(this.cube);
 
             let geo = new THREE.EdgesGeometry( this.cube.geometry ); // or WireframeGeometry
@@ -129,36 +114,6 @@ class Cube extends Component {
             this.cube.add( wireframe );
         }
 
-         if(this.cube){
-            this.cube.position.x =  this.props.position.x;
-            this.cube.position.y =  this.props.position.y;
-            this.cube.position.z =  this.props.position.z;
-
-            this.cube.rotation.x =  this.props.rotation.x;
-            this.cube.rotation.x =  this.props.rotation.y;
-            this.cube.rotation.x =  this.props.rotation.z;
-        }
-
-
-    }
-
-    
-    componentDidUpdate() {
-
-
-        const { position, rotation } = this.props;
-
-       
-    }
-
-
-
-    componentDidMount() {
-        this.props.onRef(this)
-    }
-
-    componentWillUnmount() {
-        this.props.onRef(undefined)
     }
 
 
