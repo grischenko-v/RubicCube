@@ -13,7 +13,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-
+        this.points = this._generatePoints(); //for group init    
         this.state = {
             rotation1: { x: 0, y: 0, z: 0 },
             cameraPosition: {x: 8.4, y: 3.8, z: 3.9},
@@ -29,19 +29,20 @@ class App extends Component {
             fov: 53,
             a: 0,
             rotateSide: 'x',
-            groupSide: 0
+            groupSide: 0,
+            groupPoints: this._getGroup(this.points,'x', 0),
+            points: this.points
         }
 
 
         this.stop = false;
         this.degToRad = Math.PI / 180;
         this.distance = 10;
-
-        this.points = this._generatePoints();
+        this.nextRotationState = 'y';
+       
         this.cubePoints = [];
-        this.begin = true;
-        this.groupPoints = this._getGroup();
-        this.otherPoints  = this._getCubes('x');
+
+       
     }
 
     _generatePoints(){
@@ -70,8 +71,8 @@ class App extends Component {
 
     }
 
-    _getSide(side, point){
-        return filter(this.points, function(o) { return o[side] == point; })
+    _getSide(points,side, point){
+        return filter(points, function(o) { return o[side] == point; })
     }
 
     _updateCamera(){
@@ -127,208 +128,141 @@ class App extends Component {
 
     updateCoords(arr){
 
-        this.points.forEach((function(point){
+        let points = this.state.points;
+
+        points.forEach((function(point){
             arr.forEach((function(item){
                  if(item.name === point.name){
-                    ///console.log(point)
-                    ///console.log(item)
                     point.x = item.x;
                     point.y = item.y;
                     point.z = item.z;
                     point.rotationX = item.rotationX % (Math.PI * 2);
                     point.rotationY = item.rotationY % (Math.PI * 2);
                     point.rotationZ = item.rotationZ % (Math.PI * 2);                    
-
-                  //  console.log(point);
                  }
             }).bind(this))
         }).bind(this))
-        
-        
+
+        return points;
     }
 
-
     gameLoop = () => {
-        requestAnimationFrame(this.gameLoop);
-        const { rotation1 } = this.state;
+
         let rotation = this.state.rotation1;
-        let newRotationSide = this.state.rotateSide;
-         this.groupPoints = this._getGroup()
+         this.setState({
+            rotation1: rotation,
+         //   groupPoints: this._getGroup(this.state.points, this.nextRotationState, 0)
+
+         })
+        
         switch (this.state.rotateSide){
             case 'x':{
-                this.setState({
-                       rotation1: rotation
-                });
-                if(!this.stop){  
-                    var r =  this.groupRef.getNewCoords(this.rotateSide);
-                    this.updateCoords(r);
-                    this.stop = true;
-                }
-                rotation.z = 0;
-                rotation.y = 0;
                 if(rotation.x <= Math.PI/2  ){
-                    rotation.x += 0.025;
+                    rotation.x += 0.015;
                 }else{  
-                    var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                    this.updateCoords(r);
-                    rotation.x = 0;
-
                     switch(this.getRandomInt(0, 2)){
                         // case 0: newRotationSide = 'x'; break; 
                         // case 1: newRotationSide = 'y'; break; 
                         // case 2: newRotationSide = 'z'; break; 
                     }
-                    newRotationSide = 'z';
-                    this.otherPoints  = this._getCubes(newRotationSide);
-                    this.updateCoords(r);
-                    this.setState({
-                        rotateSide: newRotationSide,
-                        //groupSide: this.getRandomInt(-1, 1),
-                        rotation1: rotation
-                    })
-                    this.stop = false;
-                    this.groupPoints = this._getGroup()
-                    console.log(this.points)
+                    //console.log(this.state.groupPoints);
+                    this.nextRotationState = 'y';
+                    let r =  this.groupRef.getNewCoords(this.state.rotateSide);
+                    let newPoints =   this.updateCoords(r);
+                    let newGroup =  this._getGroup(newPoints, this.nextRotationState, 0);
+                    rotation.x = 0;
+                       this.setState({
+                         rotation1: rotation,
+                         rotateSide: this.nextRotationState,
+                         groupPoints: newGroup,
+                         points: newPoints
+                    });
+                    console.log(newGroup);
                 }
                 break;
             }
+
+
             case 'y':{
-                this.setState({
-                       rotation1: rotation
-                });
-                if(!this.stop){  
-                    var r =  this.groupRef.getNewCoords(this.rotateSide);
-                    this.updateCoords(r);
-                    this.stop = true;
-                }
-                rotation.z = 0;
-                rotation.x = 0;
                 if(rotation.y <= Math.PI/2  ){
-                    rotation.y += 0.025;
+                    rotation.y += 0.015;
                 }else{  
-                    var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                    this.updateCoords(r);
-                    rotation.y = 0;
-
                     switch(this.getRandomInt(0, 2)){
-                        case 0: newRotationSide = 'x'; break; 
-                        case 1: newRotationSide = 'y'; break; 
-                        case 2: newRotationSide = 'z'; break; 
+                        // case 0: newRotationSide = 'x'; break; 
+                        // case 1: newRotationSide = 'y'; break; 
+                        // case 2: newRotationSide = 'z'; break; 
                     }
-                    newRotationSide = 'z';
-                    this.otherPoints  = this._getCubes(newRotationSide);
-                    this.updateCoords(r);
-                    this.setState({
-                        rotateSide: newRotationSide,
-                        groupSide: this.getRandomInt(-1, 2),
-                        rotation1: rotation
-                    })
-                    this.stop = false;
-                    this.groupPoints = this._getGroup()
-
-
+                    this.nextRotationState = 'z';
+                    let r =  this.groupRef.getNewCoords(this.state.rotateSide);
+                    let newPoints =   this.updateCoords(r);
+                    let newGroup =  this._getGroup(newPoints, this.nextRotationState, 0);
+                    rotation.y = 0;
+                       this.setState({
+                         rotation1: rotation,
+                         rotateSide: this.nextRotationState,
+                         groupPoints: newGroup,
+                         points: newPoints
+                    });
                 }
                 break;
             }
             case 'z':{
-                this.setState({
-                       rotation1: rotation
-                });
-                if(!this.stop){  
-                    var r =  this.groupRef.getNewCoords(this.rotateSide);
-                    this.updateCoords(r);
-                    this.stop = true;
-                }
-                rotation.x = 0;
-                rotation.y = 0;
                 if(rotation.z <= Math.PI/2  ){
-                    rotation.z += 0.025;
+                    rotation.z += 0.015;
                 }else{  
-                    var r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                    this.updateCoords(r);
-                    rotation.z = 0;
-
-                    switch(this.getRandomInt(1, 3)){
-                        //case 0: newRotationSide = 'x'; break; 
-                       //case 1: newRotationSide = 'y'; break; 
-                       //case 2: newRotationSide = 'z'; break; 
+                    switch(this.getRandomInt(0, 2)){
+                        // case 0: newRotationSide = 'x'; break; 
+                        // case 1: newRotationSide = 'y'; break; 
+                        // case 2: newRotationSide = 'z'; break; 
                     }
-                    newRotationSide = 'x';
-                    this.otherPoints  = this._getCubes(newRotationSide);
-                    this.updateCoords(r);
-                    this.setState({
-                        rotateSide: newRotationSide,
-                       // groupSide: this.getRandomInt(-1, 2),
-                        rotation1: rotation
-                    })
-                    this.stop = false;
-                    this.groupPoints = this._getGroup()
+                    this.nextRotationState = 'x';
+                    let r =  this.groupRef.getNewCoords(this.state.rotateSide);
+                    let newPoints =   this.updateCoords(r);
+                    let newGroup =  this._getGroup(newPoints, this.nextRotationState, 0);
+                    rotation.z = 0;
+                       this.setState({
+                         rotation1: rotation,
+                         rotateSide: this.nextRotationState,
+                         groupPoints: newGroup,
+                         points: newPoints
+                    });
                 }
                 break;
             }
-
         }
-        this.setState({
-            rotation1: rotation
-        });
 
-        
-       
+        requestAnimationFrame(this.gameLoop); 
     }
 
     getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
+    _getGroup(allPoints, rSide, side){
+        let group = this._getSide(allPoints, rSide, side);
 
-    _getGroup(){
-        let sides = [-1, 0, 1];
-        let groupSide = this.getRandomInt(-1, 2);
-        let group = this._getSide(this.state.rotateSide, this.state.groupSide);
         group.map((point)=>{
             point.visibile = false
         })
-
+       let points = allPoints;
         // console.log(group);
-
-        this.points.forEach((function(point){
+          points.forEach((function(point){
             group.forEach((function(item){
-                 if(item.name === point.name){
+                  point.visibile = true;
+            }).bind(this))
+        }).bind(this))
+
+
+        points.forEach((function(point){
+            group.forEach((function(item){
+                 if(item.name === point.name)
                     point.visibile = false;
 
-                 }
             }).bind(this))
         }).bind(this))
+       // console.log(allPoints);
         return group
 
-    }
-
-    _getCubes(rotateSide){
-        let sides = [-1, 0, 1];
-        let poitsSides = [];
-        let points = [];
-
-        sides.forEach(function(side){
-            if(this.state.groupSide != side)
-                poitsSides.push(side);
-        }.bind(this))
-
-        let points1 = this._getSide(rotateSide,  poitsSides[0]);
-        let points2 = this._getSide(rotateSide, poitsSides[1]);
-
-        points = points1.concat(points2);
-
-
-        this.points.forEach((function(point){
-            points.forEach((function(item){
-                 if(item.name === point.name){
-                    point.visibile = true;
-
-                 }
-            }).bind(this))
-        }).bind(this))
-
-        return  points
     }
 
 
@@ -336,7 +270,7 @@ class App extends Component {
         const { rotation1, cameraPosition, x, y } = this.state;
 
 
-        const group = <Group rotation = {this.state.rotation1} points = { this.groupPoints }
+        const group = <Group rotation = {this.state.rotation1} points = { this.state.groupPoints }
                                         onRef={ref => (this.groupRef = ref)}
                                         rotationSide = {this.state.rotateSide}
 
@@ -344,7 +278,7 @@ class App extends Component {
 
         let points = [];
 
-              {this.points.map((function(point, index){
+              {this.state.points.map((function(point, index){
                                        points.push( <Cube key = {point.name}
                                                         position={{
                                                             x: point.x, 
