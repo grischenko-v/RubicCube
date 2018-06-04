@@ -75,9 +75,14 @@ class Group extends Component {
     }
 
     componentWillUpdate(){
-        if(!this.group)
 
-        {this.group = new THREE.Group();
+        
+        this.context.scene.remove(this.group);
+        this.group = null;
+
+
+
+        this.group = new THREE.Group();
 
        // console.log(this.props.points);
         
@@ -136,7 +141,8 @@ class Group extends Component {
 
         this.side = this.props.rotationSide;
         this.context.scene.add(this.group);
-        }
+        
+
     }
 
 
@@ -185,8 +191,6 @@ class Group extends Component {
         
         this.group.matrixAutoUpdate = false;
         this.group.updateMatrix();
-        this.context.scene.remove(this.group);
-        this.group = null;
        // console.log(mas);
         return mas;
         }
