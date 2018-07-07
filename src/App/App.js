@@ -71,9 +71,7 @@ class App extends Component {
 
     }
 
-    _getSide(points,side, point){
-        return filter(points, function(o) { return o[side] == point; })
-    }
+
 
     _updateCamera(){
         let position = {
@@ -126,19 +124,19 @@ class App extends Component {
         this.gameLoop();
     }
 
-    updateCoords(arr){
+    updateCoords(points1, arr){
 
-        let points = this.state.points;
-
+        //let points;
+        const points = JSON.parse(JSON.stringify(points1))
         points.forEach((function(point){
             arr.forEach((function(item){
                  if(item.name === point.name){
                     point.x = item.x;
                     point.y = item.y;
                     point.z = item.z;
-                    point.rotationX = item.rotationX % (Math.PI * 2);
-                    point.rotationY = item.rotationY % (Math.PI * 2);
-                    point.rotationZ = item.rotationZ % (Math.PI * 2);                    
+                    point.rotationX = (item.rotationX) % (Math.PI * 2);
+                    point.rotationY = (item.rotationY) % (Math.PI * 2);
+                    point.rotationZ = (item.rotationZ) % (Math.PI * 2);
                  }
             }).bind(this))
         }).bind(this))
@@ -157,6 +155,8 @@ class App extends Component {
         
         switch (this.state.rotateSide){
             case 'x':{
+                rotation.y = 0;
+                rotation.z = 0;
                 if(rotation.x <= Math.PI/2  ){
                     rotation.x += 0.015;
                 }else{  
@@ -168,22 +168,24 @@ class App extends Component {
                     //console.log(this.state.groupPoints);
                     this.nextRotationState = 'y';
                     let r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                    let newPoints =   this.updateCoords(r);
+                   let newPoints =   this.updateCoords(this.state.points, r);
+                   
                     let newGroup =  this._getGroup(newPoints, this.nextRotationState, 0);
+
                     rotation.x = 0;
                        this.setState({
                          rotation1: rotation,
                          rotateSide: this.nextRotationState,
-                         groupPoints: newGroup,
+                        // groupPoints: newGroup,
                          points: newPoints
                     });
-                    console.log(newGroup);
                 }
                 break;
             }
 
-
             case 'y':{
+                rotation.x = 0;
+                rotation.z = 0;
                 if(rotation.y <= Math.PI/2  ){
                     rotation.y += 0.015;
                 }else{  
@@ -192,10 +194,13 @@ class App extends Component {
                         // case 1: newRotationSide = 'y'; break; 
                         // case 2: newRotationSide = 'z'; break; 
                     }
-                    this.nextRotationState = 'z';
+                    //console.log(this.state.groupPoints);
+                    this.nextRotationState = 'y';
                     let r =  this.groupRef.getNewCoords(this.state.rotateSide);
-                    let newPoints =   this.updateCoords(r);
-                    let newGroup =  this._getGroup(newPoints, this.nextRotationState, 0);
+                     let newPoints =   this.updateCoords(this.state.points, r);
+                   
+                    let newGroup =  this._getGroup(this.state.points, this.nextRotationState, 0);
+
                     rotation.y = 0;
                        this.setState({
                          rotation1: rotation,
@@ -209,7 +214,7 @@ class App extends Component {
             case 'z':{
                 if(rotation.z <= Math.PI/2  ){
                     rotation.z += 0.015;
-                }else{  
+                }else if(!this.stop){  
                     switch(this.getRandomInt(0, 2)){
                         // case 0: newRotationSide = 'x'; break; 
                         // case 1: newRotationSide = 'y'; break; 
@@ -220,10 +225,11 @@ class App extends Component {
                     let newPoints =   this.updateCoords(r);
                     let newGroup =  this._getGroup(newPoints, this.nextRotationState, 0);
                     rotation.z = 0;
+                    this.stop = true
                        this.setState({
                          rotation1: rotation,
                          rotateSide: this.nextRotationState,
-                         groupPoints: newGroup,
+                         //groupPoints: newGroup,
                          points: newPoints
                     });
                 }
@@ -238,31 +244,45 @@ class App extends Component {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
+     _getSide(points,side, point){
+        const a =  JSON.parse(JSON.stringify(points));
+        return filter(a, function(o) { return o[side] == point; })
+    }
+
     _getGroup(allPoints, rSide, side){
         let group = this._getSide(allPoints, rSide, side);
 
-        group.map((point)=>{
-            point.visibile = false
-        })
-       let points = allPoints;
+       // group.map((point)=>{
+         //   point.visibile = false
+        //})
+       const points = JSON.parse(JSON.stringify(allPoints));
         // console.log(group);
-          points.forEach((function(point){
-            group.forEach((function(item){
-                  point.visibile = true;
-            }).bind(this))
-        }).bind(this))
+        //   points.forEach((function(point){
+        //     group.forEach((function(item){
+        //           point.visibile = true;
+        //     }).bind(this))
+        // }).bind(this))
 
 
-        points.forEach((function(point){
-            group.forEach((function(item){
-                 if(item.name === point.name)
-                    point.visibile = false;
+        // points.forEach((function(point){
+        //     group.forEach((function(item){
+        //          if(item.name === point.name)
+        //             point.visibile = false;
 
-            }).bind(this))
-        }).bind(this))
+        //     }).bind(this))
+        // }).bind(this))
        // console.log(allPoints);
         return group
 
+    }
+
+    _setVisibleAll(allPoints){
+        let points = allPoints;
+        points.forEach(function(point){
+            point.visibile=true;
+
+        })
+        return points
     }
 
 

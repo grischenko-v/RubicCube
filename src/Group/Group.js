@@ -76,7 +76,7 @@ class Group extends Component {
 
     componentWillUpdate(){
 
-        
+
         this.context.scene.remove(this.group);
         this.group = null;
 
@@ -172,23 +172,24 @@ class Group extends Component {
 
            position =  cube.matrixWorld.getPosition();
            // console.log(position);
+    
             mas.push({
                 name: cube.name,
                 x: Math.abs( Math.round(position.x)) === 0 ? 0 : Math.round(position.x),
                 y: Math.abs( Math.round(position.y)) === 0 ? 0 : Math.round(position.y),
                 z: Math.abs( Math.round(position.z)) === 0 ? 0 : Math.round(position.z),
                 rotationX: side =='x' ?
-                    (rotataion.x + Math.PI /2)
-                    : rotataion.x,
+                    (Math.PI /2)
+                    : 0,
                 rotationY: side =='y' ?
-                    (rotataion.y + Math.PI /2)
-                    : rotataion.y,
+                    (Math.PI /2)
+                    : 0,
                 rotationZ: side =='z' ?
-                    (rotataion.z + Math.PI /2) 
-                    : rotataion.z
+                    ( Math.PI /2) 
+                    : 0
             })
         })
-        
+         
         this.group.matrixAutoUpdate = false;
         this.group.updateMatrix();
        // console.log(mas);
